@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('review_blocks', function (Blueprint $table) {
             $table->id();
+            $table->string('picture')->nullable();
+            $table->text('comment');
+            $table->string('name_surname_position');
+            $table->integer('stars_number');
+            $table->foreignId('company_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('block_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

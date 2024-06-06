@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('heading_blocks', function (Blueprint $table) {
+        Schema::create('image_link_elements', function (Blueprint $table) {
             $table->id();
+            $table->string('picture');
+            $table->string('link');
+            $table->integer('index');
+            $table->foreignId('block_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('heading_blocks');
+        Schema::dropIfExists('image_link_elements');
     }
 };

@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('backgrounds', function (Blueprint $table) {
+        Schema::create('block_types', function (Blueprint $table) {
             $table->id();
+            $table->string('type');
             $table->timestamps();
         });
     }
@@ -22,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('backgrounds');
+        Schema::dropIfExists('block_types');
     }
 };

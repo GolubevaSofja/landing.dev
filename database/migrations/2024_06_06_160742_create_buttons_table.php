@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('centered_picture_blocks', function (Blueprint $table) {
+        Schema::create('buttons', function (Blueprint $table) {
             $table->id();
+            $table->string('text');
+            $table->string('link');
+            $table->string('color')->nullable();
+            $table->string('icon')->nullable();
+            $table->foreignId('block_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('centered_picture_blocks');
+        Schema::dropIfExists('buttons');
     }
 };

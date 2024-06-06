@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('dropdown_blocks', function (Blueprint $table) {
             $table->id();
+            $table->string('picture')->nullable();
+            $table->string('picture_size')->nullable();
+            $table->string('alt_text')->nullable();
+            $table->string('subheading')->nullable();
+            $table->string('heading_logo')->nullable();
+            $table->string('heading');
+            $table->string('element_type');
+            $table->string('orientation')->nullable();
+            $table->string('main_color')->nullable();
+            $table->foreignId('block_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

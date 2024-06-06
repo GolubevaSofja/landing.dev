@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('buttons', function (Blueprint $table) {
+        Schema::create('carousel', function (Blueprint $table) {
             $table->id();
+            $table->string('heading');
+            $table->text('paragraph')->nullable();
+            $table->string('link')->nullable();
+            $table->string('picture')->nullable();
+            $table->foreignId('block_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('buttons');
+        Schema::dropIfExists('carousel');
     }
 };

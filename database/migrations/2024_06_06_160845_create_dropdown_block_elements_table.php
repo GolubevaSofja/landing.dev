@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('dropdown_block_elements', function (Blueprint $table) {
             $table->id();
+            $table->string('heading');
+            $table->text('paragraph1')->nullable();
+            $table->text('paragraph2')->nullable();
+            $table->string('link')->nullable();
+            $table->string('link_text')->nullable();
+            $table->integer('index');
+            $table->boolean('active_element')->default(false);
+            $table->foreignId('block_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

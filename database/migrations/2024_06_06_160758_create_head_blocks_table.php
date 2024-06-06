@@ -19,10 +19,8 @@ return new class extends Migration
             $table->string('meta_name')->nullable();
             $table->text('meta_description')->nullable();
             $table->text('scripts')->nullable();
-            $table->unsignedBigInteger('block_id');
+            $table->foreignId('block_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
-
-            $table->foreign('block_id')->references('id')->on('blocks')->onDelete('cascade');
         });
     }
 

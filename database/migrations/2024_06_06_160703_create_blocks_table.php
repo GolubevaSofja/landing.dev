@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('blocks', function (Blueprint $table) {
             $table->id();
+            $table->integer('index')->index();
+            $table->foreignId('block_type_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
