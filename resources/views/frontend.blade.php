@@ -2,12 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite(['resources/js/app.js'])
-    <title>Testpage</title>
+    <title>Frontend</title>
 </head>
 <body>
-    <div id="app"></div>
+    <h1>Welcome to the Frontend!</h1>
 </body>
-
+</html>
