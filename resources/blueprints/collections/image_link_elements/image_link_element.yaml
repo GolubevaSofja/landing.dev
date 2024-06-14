@@ -1,0 +1,46 @@
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+          -
+            handle: picture
+            field:
+              input_type: url
+              type: text
+              display: Picture
+              validate:
+                - required
+          -
+            handle: link
+            field:
+              input_type: url
+              type: text
+              display: Link
+              validate:
+                - required
+          -
+            handle: index
+            field:
+              type: integer
+              display: Index
+              validate:
+                - required
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          -
+            handle: slug
+            field:
+              type: slug
+              localizable: true
+              validate: 'max:200'
+title: 'Image link element'

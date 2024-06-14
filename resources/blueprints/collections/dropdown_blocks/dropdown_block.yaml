@@ -1,0 +1,75 @@
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+          -
+            handle: picture
+            field:
+              input_type: url
+              type: text
+              display: Picture
+          -
+            handle: picture_size
+            field:
+              type: text
+              display: 'Picture size'
+          -
+            handle: alt_text
+            field:
+              type: text
+              display: 'Alt text'
+          -
+            handle: subheading
+            field:
+              type: text
+              display: Subheading
+          -
+            handle: heading_logo
+            field:
+              input_type: url
+              type: text
+              display: 'Heading logo'
+          -
+            handle: heading
+            field:
+              type: text
+              display: Heading
+              validate:
+                - required
+          -
+            handle: element_type
+            field:
+              type: text
+              display: 'Element type'
+              validate:
+                - required
+          -
+            handle: orientation
+            field:
+              type: text
+              display: Orientation
+          -
+            handle: main_color
+            field:
+              input_type: color
+              type: text
+              display: 'Main color'
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          -
+            handle: slug
+            field:
+              type: slug
+              localizable: true
+              validate: 'max:200'
+title: 'Dropdown block'

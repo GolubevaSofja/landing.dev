@@ -1,0 +1,68 @@
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+          -
+            handle: picture
+            field:
+              input_type: url
+              type: text
+              display: Picture
+          -
+            handle: picture_size
+            field:
+              type: text
+              display: 'Picture size'
+          -
+            handle: picture_position
+            field:
+              type: text
+              display: 'Picture position'
+          -
+            handle: color
+            field:
+              input_type: color
+              type: text
+              display: Color
+          -
+            handle: margin_top
+            field:
+              default: '0'
+              type: integer
+              display: 'Margin top'
+          -
+            handle: margin_left
+            field:
+              default: '0'
+              type: integer
+              display: 'Margin left'
+          -
+            handle: triangle_visible
+            field:
+              type: toggle
+              display: 'Triangle visible'
+          -
+            handle: triangle_color
+            field:
+              input_type: color
+              type: text
+              display: 'Triangle color'
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          -
+            handle: slug
+            field:
+              type: slug
+              localizable: true
+              validate: 'max:200'
+title: Background

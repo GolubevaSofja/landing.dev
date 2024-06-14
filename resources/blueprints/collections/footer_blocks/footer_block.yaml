@@ -1,0 +1,70 @@
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+          -
+            handle: picture
+            field:
+              input_type: url
+              type: text
+              display: Picture
+          -
+            handle: heading
+            field:
+              type: text
+              display: Heading
+          -
+            handle: paragraph
+            field:
+              type: textarea
+              display: Paragraph
+          -
+            handle: form_text
+            field:
+              type: text
+              display: 'Form text'
+          -
+            handle: button_text
+            field:
+              type: text
+              display: 'Button text'
+          -
+            handle: button_color
+            field:
+              input_type: color
+              type: text
+              display: 'Button color'
+          -
+            handle: company_name
+            field:
+              type: text
+              display: 'Company name'
+          -
+            handle: info
+            field:
+              type: text
+              display: Info
+          -
+            handle: copyrights
+            field:
+              type: text
+              display: Copyrights
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          -
+            handle: slug
+            field:
+              type: slug
+              localizable: true
+              validate: 'max:200'
+title: 'Footer block'

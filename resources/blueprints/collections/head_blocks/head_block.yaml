@@ -1,0 +1,56 @@
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+          -
+            handle: logo
+            field:
+              input_type: url
+              type: text
+              display: Logo
+          -
+            handle: bg_color
+            field:
+              input_type: color
+              type: text
+              display: 'Bg color'
+          -
+            handle: font_color
+            field:
+              input_type: color
+              type: text
+              display: 'Font color'
+          -
+            handle: meta_name
+            field:
+              type: text
+              display: 'Meta name'
+          -
+            handle: meta_description
+            field:
+              type: textarea
+              display: 'Meta description'
+          -
+            handle: scripts
+            field:
+              type: textarea
+              display: Scripts
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          -
+            handle: slug
+            field:
+              type: slug
+              localizable: true
+              validate: 'max:200'
+title: 'Head block'
