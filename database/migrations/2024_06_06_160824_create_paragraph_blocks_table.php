@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('paragraph_blocks', function (Blueprint $table) {
             $table->id();
-            $table->string('paragraph')->nullable();
+            $table->text('paragraph');
             $table->foreignId('block_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

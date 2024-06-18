@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('backgrounds', function (Blueprint $table) {
             $table->id();
             $table->string('picture')->nullable();
-            $table->string('picture_size')->default('white');
+            $table->string('picture_size')->nullable();
             $table->string('picture_position')->nullable();
-            $table->string('color')->nullable();
+            $table->string('color')->default('white');
             $table->integer('margin_top')->default(0);
             $table->integer('margin_left')->default(0);
             $table->boolean('triangle_visible')->default(false);

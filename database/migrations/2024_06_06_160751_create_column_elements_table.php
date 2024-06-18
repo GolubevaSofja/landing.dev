@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('column_elements', function (Blueprint $table) {
             $table->id();
             $table->string('picture')->nullable();
-            $table->string('pic_position')->nullable();
+            $table->string('picture_position')->nullable();
             $table->string('header')->nullable();
             $table->text('paragraph')->nullable();
             $table->integer('index');
