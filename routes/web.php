@@ -16,7 +16,11 @@ Route::get('/', function () {
 
 Route::get('/home', function () {
     return Inertia::render('HomePage');
-})->middleware(['auth', 'verified'])->name('home');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+/*Route::get('/home', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');*/
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
