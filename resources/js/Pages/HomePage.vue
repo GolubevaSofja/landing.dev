@@ -1,6 +1,20 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import { defineProps } from 'vue';
+
+
+defineProps({
+    blockTypes: {
+        type: Array,
+        required: true,
+    },
+    tables: {
+        type: Object,
+        required: true,
+    },
+});
+
 </script>
 
 <template>
@@ -14,7 +28,15 @@ import { Head } from '@inertiajs/vue3';
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">You're logged in!</div>
+                   <div class="p-6 text-gray-900">
+                        <h2>Database Tables</h2>
+                        <ul>
+                            <li v-for="(table, key) in tables" :key="key">
+                                {{ key }}: {{ table }}
+                            </li>
+                        </ul>
+                </div>
+
                 </div>
             </div>
         </div>

@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -14,13 +15,13 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/home', function () {
-    return Inertia::render('HomePage');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/home', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('homepage');
 
-/*Route::get('/home', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');*/
+//Route::get('/home', function () {
+//    return Inertia::render('HomePage');
+//})->middleware(['auth', 'verified'])->name('homepage');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
