@@ -39,24 +39,19 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        BlockType::create(['type' => 'partner block']);
-        BlockType::create(['type' => 'impact block']);
-        BlockType::create(['type' => 'team block']);
-        BlockType::create(['type' => 'companies']);
-        BlockType::create(['type' => 'backgrounds']);
-        BlockType::create(['type' => 'buttons']);
-        BlockType::create(['type' => 'column elements']);
-        BlockType::create(['type' => 'head block']);
-        BlockType::create(['type' => 'head block elements']);
-        BlockType::create(['type' => 'heading paragraph block']);
-        BlockType::create(['type' => 'heading block']);
-        BlockType::create(['type' => 'paragraph block']);
-        BlockType::create(['type' => 'image link elements']);
-        BlockType::create(['type' => 'centered picture block']);
-        BlockType::create(['type' => 'dropdown block']);
-        BlockType::create(['type' => 'dropdown block elements']);
-        BlockType::create(['type' => 'review block']);
-        BlockType::create(['type' => 'footer block']);
-        BlockType::create(['type' => 'carousel']);
+        BlockType::create(['type' => 'Navigation block']);
+        BlockType::create(['type' => 'Initial block']);
+        BlockType::create(['type' => 'Welcoming block']);
+        BlockType::create(['type' => 'Trusted organisations block']);
+        BlockType::create(['type' => 'Centered text and picture block']);
+        BlockType::create(['type' => 'Block with dropdown elements and picture']);
+        BlockType::create(['type' => 'Block with heading and column elements / basic']);
+        BlockType::create(['type' => 'Block with heading and column elements / bold']);
+        BlockType::create(['type' => 'Block with column elements and pictures']);
+        BlockType::create(['type' => 'Timeline block']);
+        BlockType::create(['type' => 'Reviews block']);
+        BlockType::create(['type' => 'Block with heading and carousel']);
+        BlockType::create(['type' => 'Block with heading and buttons']);
+        BlockType::create(['type' => 'Footer block']);
     }
 }
