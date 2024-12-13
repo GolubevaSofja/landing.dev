@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BlockType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class BlockTypeController extends Controller
@@ -13,11 +14,13 @@ class BlockTypeController extends Controller
      */
     public function index()
     {
-        $blockTypes = BlockType::all();
+        $blockTypes = DB::table('block_types')->get();
 
-        return Inertia::render('HomePage', [
-            'blockTypes' => $blockTypes
-        ]);
+        return $blockTypes;
+
+//        return Inertia::render('HomePage', [
+//            'blockTypes' => $blockTypes
+//        ]);
     }
 
     public function getTableName()

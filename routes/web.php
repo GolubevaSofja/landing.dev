@@ -1,5 +1,25 @@
 <?php
 
+use App\Http\Controllers\BackgroundController;
+use App\Http\Controllers\BlockController;
+use App\Http\Controllers\BlockTypeController;
+use App\Http\Controllers\ButtonController;
+use App\Http\Controllers\CarouselController;
+use App\Http\Controllers\CenteredPictureBlockController;
+use App\Http\Controllers\ColumnElementController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\DropdownBlockController;
+use App\Http\Controllers\DropdownBlockElementController;
+use App\Http\Controllers\FooterBlockController;
+use App\Http\Controllers\HeadBlockController;
+use App\Http\Controllers\HeadBlockElementController;
+use App\Http\Controllers\HeadingBlockController;
+use App\Http\Controllers\HeadingParagraphBlockController;
+use App\Http\Controllers\ImageLinkController;
+use App\Http\Controllers\ParagraphBlockController;
+use App\Http\Controllers\ReviewBlockController;
+
+
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -30,3 +50,23 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+Route::resource('backgrounds', BackgroundController::class);
+Route::resource('blocks', BlockController::class);
+Route::resource('blockTypes', BlockTypeController::class);
+Route::resource('buttons', ButtonController::class);
+Route::resource('carousels', CarouselController::class);
+Route::resource('columnElements', ColumnElementController::class);
+Route::resource('centeredPictureBlocks', CenteredPictureBlockController::class);
+Route::resource('companies', CompanyController::class);
+Route::resource('dropdownBlocks', DropdownBlockController::class);
+Route::resource('dropdownBlockElements', DropdownBlockElementController::class);
+Route::resource('footerBlocks', FooterBlockController::class);
+Route::resource('headBlocks', HeadBlockController::class);
+Route::resource('headBlockElements', HeadBlockElementController::class);
+Route::resource('headingBlocks', HeadingBlockController::class);
+Route::resource('headingParagraphBlocks', HeadingParagraphBlockController::class);
+Route::resource('imageLinks', ImageLinkController::class);
+Route::resource('paragraphBlocks', ParagraphBlockController::class);
+Route::resource('reviewBlocks', ReviewBlockController::class);

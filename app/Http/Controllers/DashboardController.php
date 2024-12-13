@@ -31,49 +31,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // Вызываем методы из контроллеров
-        $blockTypeTable = app(BlockTypeController::class)->getTableName();
-        $companyTable = app(CompanyController::class)->getTableName();
-        $blockTable = app(BlockController::class)->getTableName();
-        $backgroundTable = app(BackgroundController::class)->getTableName();
-        $buttonTable = app(ButtonController::class)->getTableName();
-        $columnElementTable = app(ColumnElementController::class)->getTableName();
-        $headBlockTable = app(HeadBlockController::class)->getTableName();
-        $headBlockElementTable = app(HeadBlockElementController::class)->getTableName();
-        $headingBlockTable = app(HeadingBlockController::class)->getTableName();
-        $headingParagraphBlockTable = app(HeadingParagraphBlockController::class)->getTableName();
-        $paragraphBlockTable = app(ParagraphBlockController::class)->getTableName();
-        $imageLinkTable = app(ImageLinkController::class)->getTableName();
-        $centeredPictureBlockTable = app(CenteredPictureBlockController::class)->getTableName();
-        $dropdownBlockTable = app(DropdownBlockController::class)->getTableName();
-        $dropdownBlockElementTable = app(DropdownBlockElementController::class)->getTableName();
-        $reviewBlockTable = app(ReviewBlockController::class)->getTableName();
-        $footerBlockTable = app(FooterBlockController::class)->getTableName();
-        $carouselTable = app(CarouselController::class)->getTableName();
+        $blockTypes = app(BlockTypeController::class)->index();
 
-        // Собираем названия таблиц в массив
-        $tables = [
-            'blockTypeTable' => $blockTypeTable,
-            'companyTable' => $companyTable,
-            'blockTable' => $blockTable,
-            'backgroundTable' => $backgroundTable,
-            'buttonTable' => $buttonTable,
-            'columnElementTable' => $columnElementTable,
-            'headBlockTable' => $headBlockTable,
-            'headBlockElementTable' => $headBlockElementTable,
-            'headingBlockTable' => $headingBlockTable,
-            'headingParagraphBlockTable' => $headingParagraphBlockTable,
-            'paragraphBlockTable' => $paragraphBlockTable,
-            'imageLinkTable' => $imageLinkTable,
-            'centeredPictureBlockTable' => $centeredPictureBlockTable,
-            'dropdownBlockTable' => $dropdownBlockTable,
-            'dropdownBlockElementTable' => $dropdownBlockElementTable,
-            'reviewBlockTable' => $reviewBlockTable,
-            'footerBlockTable' => $footerBlockTable,
-            'carouselTable' => $carouselTable,
-        ];
-
-        return Inertia::render('HomePage', ['tables' => $tables]);
+        return Inertia::render('HomePage', [
+            'blockTypes' => $blockTypes,
+        ]);
     }
 
     /**
