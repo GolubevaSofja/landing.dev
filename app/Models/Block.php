@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,8 +10,21 @@ class Block extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'block_type_id',
+        'index',
+    ];
+
+    protected $appends = [
+        'type',
+    ];
+
     public function blockType(){
         return $this->belongsTo(BlockType::class);
+    }
+
+    public function getTypeAttribute(){
+        return $this->blockType->type;
     }
 
     public function backgrounds(){
@@ -73,4 +87,11 @@ class Block extends Model
         return $this->hasMany(ReviewBlock::class);
     }
 
+    public function getCreatedAtAttribute($value){
+        return Carbon::createFromTimestamp(strtotime($value))->format('d.m.Y H:i');
+    }
+
+    public function getUpdatedAtAttribute($value){
+        return Carbon::createFromTimestamp(strtotime($value))->format('d.m.Y H:i');
+    }
 }
