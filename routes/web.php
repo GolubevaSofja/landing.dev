@@ -54,6 +54,7 @@ require __DIR__.'/auth.php';
 
 Route::resource('backgrounds', BackgroundController::class);
 Route::resource('blocks', BlockController::class);
+Route::post('blocks/create', [BlockController::class, 'create']);
 Route::resource('blockTypes', BlockTypeController::class);
 Route::resource('buttons', ButtonController::class);
 Route::resource('carousels', CarouselController::class);

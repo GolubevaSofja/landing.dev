@@ -23,23 +23,27 @@ defineProps({
         type: Array,
         required: true,
     },
+    message: {
+        type: String,
+        required: false,
+    },
 });
 
 const blockComponents = {
-    "Navigation block": NavigationBlock,
-    "Initial block": InitialBlock,
-    "Welcoming block": WelcomingBlock,
-    "Trusted organisations block": TrustedOrganizationsBlock,
-    "Centered text and picture block": CenteredTextAndPictureBlock,
+    "Block with column elements and pictures": BlockWithColumnElementsAndPictures,
     "Block with dropdown elements and picture": BlockWithDropdownElementsAndPicture,
+    "Block with heading and buttons": BlockWithHeadingAndButtons,
+    "Block with heading and carousel": BlockWithHeadingAndCarousel,
     "Block with heading and column elements / basic": BlockWithHeadingAndColumnElementsBasic,
     "Block with heading and column elements / bold": BlockWithHeadingAndColumnElementsBold,
-    "Block with column elements and pictures": BlockWithColumnElementsAndPictures,
-    "Timeline block": TimelineBlock,
-    "Reviews block": ReviewsBlock,
-    "Block with heading and carousel": BlockWithHeadingAndCarousel,
-    "Block with heading and buttons": BlockWithHeadingAndButtons,
+    "Centered text and picture block": CenteredTextAndPictureBlock,
     "Footer block": FooterBlock,
+    "Initial block": InitialBlock,
+    "Navigation block": NavigationBlock,
+    "Reviews block": ReviewsBlock,
+    "Timeline block": TimelineBlock,
+    "Trusted organisations block": TrustedOrganizationsBlock,
+    "Welcoming block": WelcomingBlock,
 };
 
 const selectedBlock = ref(null);
@@ -67,6 +71,8 @@ const selectedBlock = ref(null);
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                    <div class="p-6 text-gray-900">
+
+                       <div v-if="message" class="bg-lime-100 p-4 rounded-sm mb-4">{{ message }}</div>
 
                        <h2>Block types</h2>
 
