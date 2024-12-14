@@ -19,11 +19,15 @@ function removeColumnElement(index) {
 }
 
 const form = useForm({
-    //
+    blockType: 'Block with column elements and pictures',
+    columnElements: [],
+    paragraph: '',
+    blockIndex: 0
 });
 
 const submit = () => {
-    //
+    form.columnElements = columnElements;
+    form.post(route('blocks.create'));
 };
 </script>
 
@@ -32,7 +36,7 @@ const submit = () => {
 <!--        <br><pre>paragraph_blocks table</pre><br>-->
 
         <label for="paragraph">Paragraph:</label><br>
-        <input type="text" id="paragraph" required /><br>
+        <input type="text" id="paragraph" required v-model="form.paragraph" /><br>
 
 <!--        <br><br><pre>column_elements table</pre><br>-->
 
@@ -62,7 +66,7 @@ const submit = () => {
 
         <br><br>
         <label for="block_index">Block index:</label><br>
-        <input id="block_index" type="number" name="block_index" /><br>
+        <input id="block_index" type="number" name="block_index" v-model="form.blockIndex" /><br>
 
         <button type="submit">Submit</button>
     </form>
