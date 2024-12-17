@@ -1,63 +1,80 @@
 <script setup>
-import { reactive } from 'vue';
+import {reactive} from 'vue';
+import {useForm} from "@inertiajs/vue3";
 
 const buttons = reactive([]);
 
-function addButton() {
+const addButton = () => {
     buttons.push({
-        button_text: '',
-        button_link: '',
-        button_color: '',
-        button_icon: '',
+        text: '',
+        link: '',
+        color: '',
+        icon: '',
     });
 }
 
 function removeButton(index) {
     buttons.splice(index, 1);
 }
+
+const form = useForm({
+    blockType: 'Initial block',
+    headingParagraph: {
+        heading: '',
+        paragraph: '',
+    },
+    buttons: [],
+    blockIndex: 0
+});
+
+const submit = () => {
+    form.buttons = buttons;
+    form.post(route('blocks.create'));
+};
 </script>
 
 <template>
-    <form>
-<!--        <br><pre>heading_paragraph_blocks table</pre><br>-->
+    <form @submit.prevent="submit">
+        <!--        <br><pre>heading_paragraph_blocks table</pre><br>-->
 
         <label for="heading">Heading:</label><br>
-        <input id="heading" type="text" name="heading"><br>
+        <input id="heading" type="text" v-model="form.headingParagraph.heading"><br>
 
         <label for="paragraph">Paragraph:</label><br>
-        <input id="paragraph" type="text" name="paragraph"><br>
+        <input id="paragraph" type="text" v-model="form.headingParagraph.paragraph"><br>
 
-        <br><p>Buttons</p><br>
+        <br><br>
+        <p>Buttons</p><br>
 
         <div v-for="(button, index) in buttons" :key="index" class="mb-4">
-            <label :for="`button_text_${index}`">Button text:</label><br>
+            <label :for="`text_${index}`">Button text:</label><br>
             <input
-                :id="`button_text_${index}`"
+                :id="`text_${index}`"
                 type="text"
-                v-model="button.button_text"
+                v-model="button.text"
                 required
             ><br>
 
-            <label :for="`button_link_${index}`">Button link:</label><br>
+            <label :for="`link_${index}`">Button link:</label><br>
             <input
-                :id="`button_link_${index}`"
+                :id="`link_${index}`"
                 type="url"
-                v-model="button.button_link"
+                v-model="button.link"
                 required
             ><br>
 
-            <label :for="`button_color_${index}`">Button color:</label><br>
+            <label :for="`color_${index}`">Button color:</label><br>
             <input
-                :id="`button_color_${index}`"
+                :id="`color_${index}`"
                 type="color"
-                v-model="button.button_color"
+                v-model="button.color"
             ><br>
 
-            <label :for="`button_icon_${index}`">Button icon:</label><br>
+            <label :for="`icon_${index}`">Button icon:</label><br>
             <input
-                :id="`button_icon_${index}`"
+                :id="`icon_${index}`"
                 type="url"
-                v-model="button.button_icon"
+                v-model="button.icon"
             ><br>
 
             <button type="button" @click="removeButton(index)">Remove Button</button>
@@ -68,7 +85,9 @@ function removeButton(index) {
 
         <br><br>
         <label for="block_index">Block index:</label><br>
-        <input id="block_index" type="number" name="block_index"><br>
+        <input id="block_index" type="number" v-model="form.blockIndex"><br>
+
+        <button class="btn-submit" type="submit">Save Block</button>
     </form>
 </template>
 
@@ -82,9 +101,11 @@ button {
     cursor: pointer;
     border-radius: 5px;
 }
+
 button:hover {
     background-color: #45a049;
 }
+
 hr {
     border: 1px solid #ccc;
     margin: 20px 0;

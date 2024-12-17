@@ -1,57 +1,70 @@
 <script setup>
 import { reactive } from 'vue';
+import { useForm } from "@inertiajs/vue3";
 
-const headBlockElements = reactive([
-    // {
-    //     element_name: '',
-    // },
-]);
+const headBlockElements = reactive([]);
 
 function addElement() {
     headBlockElements.push({
-        element_name: '',
+        name: '',
     });
 }
 
 function removeElement(index) {
-    // if (headBlockElements.length > 1) {
-    //     headBlockElements.splice(index, 1);
-    // }
     headBlockElements.splice(index, 1);
 }
+
+const form = useForm({
+    blockType: 'Navigation block',
+    headBlock: {
+        logo:'',
+        bg_color:'',
+        font_color:'',
+        meta_name:'',
+        meta_description:'',
+        scripts:'',
+    },
+    headBlockElements: [],
+    blockIndex: 0
+});
+
+const submit = () => {
+    form.headBlockElements = headBlockElements;
+    form.post(route('blocks.create'));
+};
 </script>
 
 <template>
-    <form>
+    <form @submit.prevent="submit">
 <!--        <br><pre>head_blocks table</pre><br>-->
 
         <label for="logo">Logo URL:</label><br>
-        <input type="url" id="logo" name="logo" /><br>
+        <input type="url" id="logo" v-model="form.headBlock.logo" /><br>
 
         <label for="bg_color">Background color:</label><br>
-        <input type="color" id="bg_color" name="bg_color" /><br>
+        <input type="color" id="bg_color" v-model="form.headBlock.bg_color" /><br>
 
         <label for="font_color">Font color:</label><br>
-        <input type="color" id="font_color" name="font_color" /><br>
+        <input type="color" id="font_color" v-model="form.headBlock.font_color" /><br>
 
         <label for="meta_name">Meta Name:</label><br>
-        <input type="text" id="meta_name" name="meta_name" /><br>
+        <input type="text" id="meta_name" v-model="form.headBlock.meta_name" /><br>
 
         <label for="meta_description">Meta Description:</label><br>
-        <input type="text" id="meta_description" name="meta_description" /><br>
+        <input type="text" id="meta_description" v-model="form.headBlock.meta_description" /><br>
 
         <label for="scripts">Scripts:</label><br>
-        <input type="text" id="scripts" name="scripts" /><br>
+        <input type="text" id="scripts" v-model="form.headBlock.scripts" /><br>
 
 
         <br><p>Elements</p><br>
 
         <div v-for="(element, index) in headBlockElements" :key="index" class="mb-4">
-            <label :for="`element_name_${index}`">Element name:</label><br>
+            <label :for="`name_${index}`">Element name:</label><br>
             <input
-                :id="`element_name_${index}`"
+                :id="`name_${index}`"
                 type="text"
-                v-model="element.element_name"
+                v-model="element.name"
                 required
             ><br>
 
@@ -63,7 +76,9 @@ function removeElement(index) {
 
         <br><br>
         <label for="block_index">Block index:</label><br>
-        <input id="block_index" type="number" name="block_index"><br>
+        <input id="block_index" type="number" v-model="form.blockIndex"><br>
+
+        <button class="btn-submit" type="submit">Save Block</button>
     </form>
 </template>
 

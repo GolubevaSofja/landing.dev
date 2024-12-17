@@ -1,6 +1,6 @@
 <script setup>
 import { reactive } from 'vue';
-import axios from 'axios';
+import { useForm } from "@inertiajs/vue3";
 
 const dropdownElements = reactive([]);
 
@@ -35,56 +35,62 @@ const removeButton = (index) => {
     buttons.splice(index, 1);
 }
 
-const formData = reactive({
-    picture: '',
-    picture_size: '',
-    alt_text: '',
-    subheading: '',
-    heading_logo: '',
-    heading: '',
-    orientation: '',
-    main_color: '',
-    element_type: 'dropdown',
-    dropdownElements,
-    buttons,
+const form = useForm({
+    blockType: 'Block with dropdown elements and picture',
+    dropdown: {
+        picture: '',
+        picture_size: '',
+        alt_text: '',
+        subheading: '',
+        heading_logo: '',
+        heading: '',
+        element_type: 'dropdown',
+        orientation: '',
+        main_color: '',
+    },
+    dropdownElements: [],
+    buttons: [],
+    blockIndex: 0
 });
 
-const submitForm = async () => {
-
-}
+const submit = () => {
+    form.dropdownElements = dropdownElements;
+    form.buttons = buttons;
+    form.post(route('blocks.create'));
+};
 </script>
 
 <template>
-    <form @submit.prevent="submitForm">
+    <form @submit.prevent="submit">
         <label for="picture">Picture URL:</label><br>
-        <input id="picture" v-model="formData.picture" type="url" /><br>
+        <input id="picture" v-model="form.dropdown.picture" type="url" /><br>
 
         <label for="picture_size">Picture size:</label><br>
-        <input id="picture_size" v-model="formData.picture_size" type="number" /><br>
+        <input id="picture_size" v-model="form.dropdown.picture_size" type="number" /><br>
 
         <label for="alt_text">Alt:</label><br>
-        <input id="alt_text" v-model="formData.alt_text" type="text" /><br>
+        <input id="alt_text" v-model="form.dropdown.alt_text" type="text" /><br>
 
         <label for="subheading">Subheading:</label><br>
-        <input id="subheading" v-model="formData.subheading" type="text" /><br>
+        <input id="subheading" v-model="form.dropdown.subheading" type="text" /><br>
 
         <label for="heading_logo">Heading logo:</label><br>
-        <input id="logo" v-model="formData.heading_logo" type="url" /><br>
+        <input id="logo" v-model="form.dropdown.heading_logo" type="url" /><br>
 
         <label for="heading">Heading:</label><br>
-        <input id="heading" v-model="formData.heading" type="text" required /><br>
+        <input id="heading" v-model="form.dropdown.heading" type="text" required /><br>
 
         <label for="element_type">Element Type:</label><br>
-        <input id="element_type" v-model="formData.element_type" type="text" readonly /><br>
+        <input id="element_type" v-model="form.dropdown.element_type" type="text" readonly /><br>
 
         <label for="orientation">Orientation:</label><br>
-        <input id="orientation_left" v-model="formData.orientation" type="radio" value="left" />
+        <input id="orientation_left" v-model="form.dropdown.orientation" type="radio" value="left" />
         <label for="orientation_left">left</label><br>
-        <input id="orientation_right" v-model="formData.orientation" type="radio" value="right" />
+        <input id="orientation_right" v-model="form.dropdown.orientation" type="radio" value="right" />
         <label for="orientation_right">right</label><br>
 
         <label for="main_color">Main color:</label><br>
-        <input id="main_color" v-model="formData.main_color" type="color" /><br>
+        <input id="main_color" v-model="form.dropdown.main_color" type="color" /><br>
 
         <h3>Dropdown Elements</h3>
         <div v-for="(element, index) in dropdownElements" :key="index" class="mb-4">
@@ -137,7 +143,7 @@ const submitForm = async () => {
         <br><br>
 
         <label for="block_index">Block index:</label><br>
-        <input id="block_index" type="number" name="block_index"><br>
+        <input id="block_index" type="number" name="block_index" v-model="form.blockIndex"><br>
 
         <button class="btn-submit" type="submit">Save Block</button>
     </form>

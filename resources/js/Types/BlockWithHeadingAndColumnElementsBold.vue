@@ -1,5 +1,6 @@
 <script setup>
 import { reactive } from 'vue';
+import { useForm } from "@inertiajs/vue3";
 
 const columnElements = reactive([]);
 
@@ -16,17 +17,32 @@ function addColumnElement() {
 function removeColumnElement(index) {
     columnElements.splice(index, 1);
 }
+
+const form = useForm({
+    blockType: 'Block with heading and column elements / bold',
+    heading: {
+        subheading: '',
+        heading: '',
+    },
+    columnElements: [],
+    blockIndex: 0
+});
+
+const submit = () => {
+    form.columnElements = columnElements;
+    form.post(route('blocks.create'));
+};
 </script>
 
 <template>
-    <form>
+    <form @submit.prevent="submit">
         <!--        <br><pre>heading_blocks table</pre><br>-->
 
         <label for="subheading">Subheading:</label><br>
-        <input id="subheading" type="text" name="subheading" /><br>
+        <input id="subheading" type="text" v-model="form.heading.subheading" /><br>
 
         <label for="heading">Heading:</label><br>
-        <input id="heading" type="text" name="heading" /><br>
+        <input id="heading" type="text" v-model="form.heading.heading" /><br>
 
         <br><br><p>Column elements</p><br>
 
@@ -75,7 +91,9 @@ function removeColumnElement(index) {
 
         <br><br>
         <label for="block_index">Block index:</label><br>
-        <input id="block_index" type="number" name="block_index"><br>
+        <input id="block_index" type="number" v-model="form.blockIndex"><br>
+
+        <button class="btn-submit" type="submit">Save Block</button>
     </form>
 </template>
 

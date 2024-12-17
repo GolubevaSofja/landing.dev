@@ -1,5 +1,6 @@
 <script setup>
 import { reactive } from 'vue';
+import { useForm } from "@inertiajs/vue3";
 
 const imageLinkElements = reactive([]);
 
@@ -14,14 +15,26 @@ function addElement() {
 function removeElement(index) {
     imageLinkElements.splice(index, 1);
 }
+
+const form = useForm({
+    blockType: 'Trusted organisations block',
+    paragraph:'',
+    imageLinkElements: [],
+    blockIndex: 0
+});
+
+const submit = () => {
+    form.imageLinkElements = imageLinkElements;
+    form.post(route('blocks.create'));
+};
 </script>
 
 <template>
-    <form>
+    <form @submit.prevent="submit">
 <!--        <br><pre>paragraph_blocks table</pre><br>-->
 
         <label for="paragraph">Paragraph:</label><br>
-        <input type="text" id="paragraph" name="paragraph" /><br>
+        <input type="text" id="paragraph" v-model="form.paragraph" /><br>
 
 
         <br><p>Image link elements</p><br>
@@ -59,7 +72,9 @@ function removeElement(index) {
 
         <br><br>
         <label for="block_index">Block index:</label><br>
-        <input id="block_index" type="number" name="block_index"><br>
+        <input id="block_index" type="number" v-model="form.blockIndex"><br>
+
+        <button class="btn-submit" type="submit">Save Block</button>
     </form>
 </template>
 

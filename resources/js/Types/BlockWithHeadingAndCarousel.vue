@@ -1,62 +1,78 @@
 <script setup>
 import { reactive } from 'vue';
+import { useForm } from "@inertiajs/vue3";
 
 const carousels = reactive([]);
 
 function addCarousel() {
     carousels.push({
-        carousel_heading: '',
-        carousel_paragraph: '',
-        carousel_link: '',
-        carousel_picture: '',
+        heading: '',
+        paragraph: '',
+        link: '',
+        picture: '',
     });
 }
 
 function removeCarousel(index) {
     carousels.splice(index, 1);
 }
+
+const form = useForm({
+    blockType: 'Block with heading and carousel',
+    headingParagraph: {
+        heading: '',
+        paragraph: '',
+    },
+    carousels: [],
+    blockIndex: 0
+});
+
+const submit = () => {
+    form.carousels = carousels;
+    form.post(route('blocks.create'));
+};
 </script>
 
 <template>
-    <form>
+    <form @submit.prevent="submit">
 <!--        <br><pre>heading_paragraph_blocks table</pre><br>-->
 
         <label for="heading">Heading:</label><br>
-        <input id="heading" type="text" name="heading"><br>
+        <input id="heading" type="text" v-model="form.headingParagraph.heading"><br>
 
         <label for="paragraph">Paragraph:</label><br>
-        <input id="paragraph" type="text" name="paragraph"><br>
+        <input id="paragraph" type="text" v-model="form.headingParagraph.paragraph"><br>
 
         <br><br><p>Carousels</p><br>
 
         <div v-for="(carousel, index) in carousels" :key="index" class="mb-4">
-            <label :for="`carousel_heading_${index}`">Carousel heading:</label><br>
+            <label :for="`heading_${index}`">Carousel heading:</label><br>
             <input
-                :id="`carousel_heading_${index}`"
+                :id="`heading_${index}`"
                 type="text"
-                v-model="carousel.carousel_heading"
+                v-model="carousel.heading"
                 required
             ><br>
 
-            <label :for="`carousel_paragraph_${index}`">Carousel paragraph:</label><br>
+            <label :for="`paragraph_${index}`">Carousel paragraph:</label><br>
             <input
-                :id="`carousel_paragraph_${index}`"
+                :id="`paragraph_${index}`"
                 type="text"
-                v-model="carousel.carousel_paragraph"
+                v-model="carousel.paragraph"
             ><br>
 
-            <label :for="`carousel_link_${index}`">Carousel link:</label><br>
+            <label :for="`link_${index}`">Carousel link:</label><br>
             <input
-                :id="`carousel_link_${index}`"
+                :id="`link_${index}`"
                 type="url"
-                v-model="carousel.carousel_link"
+                v-model="carousel.link"
             ><br>
 
-            <label :for="`carousel_picture_${index}`">Carousel picture:</label><br>
+            <label :for="`picture_${index}`">Carousel picture:</label><br>
             <input
-                :id="`carousel_picture_${index}`"
+                :id="`picture_${index}`"
                 type="url"
-                v-model="carousel.carousel_picture"
+                v-model="carousel.picture"
             ><br>
 
             <button type="button" @click="removeCarousel(index)">Remove Carousel</button>
@@ -67,7 +83,9 @@ function removeCarousel(index) {
 
         <br><br>
         <label for="block_index">Block index:</label><br>
-        <input id="block_index" type="number" name="block_index"><br>
+        <input id="block_index" type="number" v-model="form.blockIndex"><br>
+
+        <button class="btn-submit" type="submit">Save Block</button>
     </form>
 </template>
 
