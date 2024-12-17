@@ -35,7 +35,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/home', [DashboardController::class, 'index'])
+//Route::get('/home', [DashboardController::class, 'index'])
+//    ->middleware(['auth', 'verified'])
+//    ->name('homepage');
+
+Route::get('/home', [BlockController::class, 'homeView'])
     ->middleware(['auth', 'verified'])
     ->name('homepage');
 
