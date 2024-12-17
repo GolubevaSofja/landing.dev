@@ -9,7 +9,14 @@ class ReviewBlock extends Model
 {
     use HasFactory;
 
-    public function countries(){
+    protected $fillable = [
+        'picture',
+        'comment',
+        'name_surname_position',
+        'stars_number',
+    ];
+
+    public function company(){
         return $this->belongsTo(Company::class);
     }
 

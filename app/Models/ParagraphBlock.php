@@ -9,6 +9,10 @@ class ParagraphBlock extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'paragraph',
+    ];
+
     public function block(){
         return $this->belongsTo(Block::class);
     }

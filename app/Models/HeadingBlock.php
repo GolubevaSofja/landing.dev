@@ -9,6 +9,11 @@ class HeadingBlock extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'subheading',
+        'heading',
+    ];
+
     public function block(){
         return $this->belongsTo(Block::class);
     }

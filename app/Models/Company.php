@@ -9,6 +9,11 @@ class Company extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'logo',
+    ];
+
     public function reviews(){
         return $this->hasMany(ReviewBlock::class);
     }

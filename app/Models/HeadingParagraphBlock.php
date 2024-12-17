@@ -10,6 +10,7 @@ class HeadingParagraphBlock extends Model
     use HasFactory;
 
     protected $fillable = [
+        'heading',
         'paragraph',
     ];
 

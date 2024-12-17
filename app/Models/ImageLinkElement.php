@@ -9,6 +9,12 @@ class ImageLinkElement extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'picture',
+        'link',
+        'index',
+    ];
+
     public function block(){
         return $this->belongsTo(Block::class);
     }

@@ -9,6 +9,13 @@ class Button extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'text',
+        'link',
+        'color',
+        'icon',
+    ];
+
     public function block(){
         return $this->belongsTo(Block::class);
     }

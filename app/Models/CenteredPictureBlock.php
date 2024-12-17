@@ -9,6 +9,15 @@ class CenteredPictureBlock extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'subheading',
+        'heading',
+        'paragraph',
+        'picture',
+        'picture_size',
+        'alt_text',
+    ];
+
     public function block(){
         return $this->belongsTo(Block::class);
     }

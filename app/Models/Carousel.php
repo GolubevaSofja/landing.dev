@@ -9,6 +9,13 @@ class Carousel extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'heading',
+        'paragraph',
+        'link',
+        'picture',
+    ];
+
     public function block(){
         return $this->belongsTo(Block::class);
     }

@@ -9,6 +9,10 @@ class HeadBlockElement extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+    ];
+
     public function block(){
         return $this->belongsTo(Block::class);
     }
