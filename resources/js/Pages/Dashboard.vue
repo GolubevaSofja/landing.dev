@@ -2,6 +2,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import {defineProps} from "vue";
+import { Inertia } from '@inertiajs/inertia';
 
 defineProps({
     blocks: {
@@ -9,6 +10,16 @@ defineProps({
         required: true,
     },
 });
+
+const deleteBlock = (id) => {
+    if (confirm("Are you sure you want to delete this block?")) {
+        Inertia.visit(`/blocks/${id}`, {
+            method: 'delete',
+            preserveScroll: true,
+            preserveState: false,
+        });
+    }
+};
 </script>
 
 <template>
@@ -43,8 +54,10 @@ defineProps({
                                     <td class="p-4">{{ block.created_at }}</td>
                                     <td class="p-4">{{ block.updated_at }}</td>
                                     <td>
-                                        <a class="py-1 px-2 rounded-md bg-amber-50 mr-4 border-amber-400 border">Edit</a>
-                                        <a class="py-1 px-2 rounded-md bg-red-50 border-red-400 border">Delete</a>
+                                        <a class="py-1 px-2 rounded-md bg-amber-50 mr-4 border-amber-400 border" :href="`/blocks/${block.id}/edit`">Edit</a>
+                                        <button @click="deleteBlock(block.id)" class="py-1 px-2 rounded-md bg-red-50 border-red-400 border">
+                                            Delete
+                                        </button>
                                     </td>
                                 </tr>
                             </tbody>

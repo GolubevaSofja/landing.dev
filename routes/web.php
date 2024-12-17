@@ -55,6 +55,11 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+Route::get('/blocks/{id}/edit', [BlockController::class, 'edit'])->name('blocks.edit');
+
+Route::delete('/blocks/{id}', [BlockController::class, 'destroy'])->name('blocks.destroy');
+
+
 
 Route::resource('backgrounds', BackgroundController::class);
 Route::resource('blocks', BlockController::class);

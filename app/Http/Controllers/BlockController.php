@@ -192,7 +192,38 @@ class BlockController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $block = $this->blockRepository->findById($id);
+        $blockType = $block->getTypeAttribute();
+
+        switch ($blockType) {
+            case self::BLOCK_WITH_COLUMNS_AND_PICTURES:
+                $blockData = $block->load([
+                    'paragraphBlock',
+                    'columnElements',
+                ]);
+                break;
+            case self::BLOCK_WITH_DROPDOWNS_AND_PICTURES:
+            case self::BLOCK_WITH_HEADING_AND_BUTTONS:
+            case self::BLOCK_WITH_HEADING_AND_CAROUSELS:
+            case self::BLOCK_WITH_HEADING_AND_COLUMNS_BASIC:
+            case self::BLOCK_WITH_HEADING_AND_COLUMNS_BOLD:
+            case self::BLOCK_WITH_CENTERED_TEXT_AND_PICTURE:
+            case self::FOOTER_BLOCK:
+            case self::INITIAL_BLOCK:
+            case self::NAVIGATION_BLOCK:
+            case self::REVIEWS_BLOCK:
+            case self::TIMELINE_BLOCK:
+            case self::TRUSTED_ORGANIZATIONS_BLOCK:
+            case self::WELCOMING_BLOCK:
+            default:
+                $message = 'This block type is not supported';
+        }
+
+        return Inertia::render('BlockEdit', [
+            'block' => $blockData,
+            'blockType' => $blockType,
+            'blockTypes' => $this->blockTypeRepository->all(),
+        ]);
     }
 
     /**
@@ -208,6 +239,12 @@ class BlockController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $block = $this->blockRepository->findById($id);
+
+        $block->delete();
+
+        return Inertia::render('Dashboard', [
+            'message' => 'Block deleted successfully',
+        ]);
     }
 }

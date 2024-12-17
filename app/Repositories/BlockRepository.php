@@ -20,4 +20,14 @@ class BlockRepository
     {
         return Block::orderBy($orderBy)->get();
     }
+
+    public function findById(int $id): Block
+    {
+        return Block::findOrFail($id);
+    }
+
+    public function blockTypeId()
+    {
+
+    }
 }
