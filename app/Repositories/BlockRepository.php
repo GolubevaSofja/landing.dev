@@ -25,9 +25,4 @@ class BlockRepository
     {
         return Block::findOrFail($id);
     }
-
-    public function blockTypeId()
-    {
-
-    }
 }

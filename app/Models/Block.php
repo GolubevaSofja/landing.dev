@@ -79,8 +79,12 @@ class Block extends Model
         return $this->hasMany(ImageLinkElement::class);
     }
 
-    public function paragraphBlock(){
+    public function paragraphBlocks(){
         return $this->hasMany(ParagraphBlock::class);
+    }
+
+    public function paragraphBlock(){
+        return $this->hasOne(ParagraphBlock::class);
     }
 
     public function reviewBlocks(){

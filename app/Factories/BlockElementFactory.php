@@ -118,7 +118,7 @@ class BlockElementFactory
 
     public function createTrustedOrganizationsBlock(Block $block, string $paragraph, array $imageLinkElements):void
     {
-        $block->paragraphBlock()->create([
+        $block->paragraphBlocks()->create([
            'paragraph' => $paragraph,
         ]);
 
