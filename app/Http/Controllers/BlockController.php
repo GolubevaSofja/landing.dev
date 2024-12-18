@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Factories\BlockElementFactory;
 use App\Http\Requests\BlockRequest;
+use App\Http\Resources\BlockWithColumnElementsAndPicturesResource;
 use App\Repositories\BlockRepository;
 use App\Repositories\BlockTypeRepository;
 use Illuminate\Http\Request;
@@ -197,10 +198,7 @@ class BlockController extends Controller
 
         switch ($blockType) {
             case self::BLOCK_WITH_COLUMNS_AND_PICTURES:
-                $blockData = $block->load([
-                    'paragraphBlock',
-                    'columnElements',
-                ]);
+                $blockData = new BlockWithColumnElementsAndPicturesResource($block);
                 break;
             case self::BLOCK_WITH_DROPDOWNS_AND_PICTURES:
             case self::BLOCK_WITH_HEADING_AND_BUTTONS:
@@ -220,7 +218,7 @@ class BlockController extends Controller
         }
 
         return Inertia::render('BlockEdit', [
-            'block' => $blockData,
+            'block' => $blockData->toArray(),
             'blockType' => $blockType,
             'blockTypes' => $this->blockTypeRepository->all(),
         ]);
@@ -229,9 +227,9 @@ class BlockController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Block $block)
     {
-        //
+        dd($block, $request->input());
     }
 
     /**

@@ -64,6 +64,7 @@ Route::delete('/blocks/{id}', [BlockController::class, 'destroy'])->name('blocks
 Route::resource('backgrounds', BackgroundController::class);
 Route::resource('blocks', BlockController::class);
 Route::post('blocks/create', [BlockController::class, 'create']);
+Route::post('blocks/{block}', [BlockController::class, 'update']);
 Route::resource('blockTypes', BlockTypeController::class);
 Route::resource('buttons', ButtonController::class);
 Route::resource('carousels', CarouselController::class);
