@@ -1,33 +1,46 @@
 <script setup>
-import { reactive } from 'vue';
+import {defineProps, reactive} from 'vue';
 import { useForm } from "@inertiajs/vue3";
 
-const columnElements = reactive([]);
+const props = defineProps({
+    block: {
+        type: Object,
+        default: {
+            id: null,
+            blockIndex: 0,
+            paragraph: '',
+            columnElements: []
+        },
+    },
+});
+
+const form = useForm({
+    blockType: 'Block with column elements and pictures',
+    columnElements: props.block.columnElements,
+    paragraph: props.block.paragraph,
+    blockIndex: props.block.blockIndex
+});
 
 function addColumnElement() {
-    columnElements.push({
+    form.columnElements.push({
         picture: '',
-        heading: '',
+        picture_position: '',
+        header: '',
         paragraph: '',
-        index: columnElements.length + 1,
+        index: props.block.columnElements.length + 1,
         width: ''
     });
 }
 
 function removeColumnElement(index) {
-    columnElements.splice(index, 1);
+    form.columnElements.splice(index, 1);
 }
-
-const form = useForm({
-    blockType: 'Block with column elements and pictures',
-    columnElements: [],
-    paragraph: '',
-    blockIndex: 0
-});
-
 const submit = () => {
-    form.columnElements = columnElements;
-    form.post(route('blocks.create'));
+    if (props.block.id) {
+        form.post(route('blocks.update', props.block.id));
+    } else {
+        form.post(route('blocks.create'));
+    }
 };
 </script>
 
@@ -40,7 +53,7 @@ const submit = () => {
 
 <!--        <br><br><pre>column_elements table</pre><br>-->
 
-        <div v-for="(element, index) in columnElements" :key="index" class="mb-4">
+        <div v-for="(element, index) in form.columnElements" :key="index" class="mb-4">
             <label :for="`picture-${index}`">Picture:</label><br>
             <input :id="`picture-${index}`" v-model="element.picture" type="url" name="picture" /><br>
 

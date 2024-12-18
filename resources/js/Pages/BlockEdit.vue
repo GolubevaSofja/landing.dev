@@ -17,7 +17,7 @@ import BlockWithHeadingAndCarousel from "@/Types/BlockWithHeadingAndCarousel.vue
 import BlockWithHeadingAndButtons from "@/Types/BlockWithHeadingAndButtons.vue";
 import FooterBlock from "@/Types/FooterBlock.vue";
 
-defineProps({
+const props = defineProps({
     block: {
         type: Object,
         required: true,
@@ -49,8 +49,6 @@ const blockComponents = {
     "Welcoming block": WelcomingBlock,
 };
 
-const selectedBlockComponent = ref(blockComponents[blockType]);
-
 </script>
 
 <template>
@@ -65,7 +63,7 @@ const selectedBlockComponent = ref(blockComponents[blockType]);
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
-                    <component :is="selectedBlockComponent" :blockType="blockType" />
+                    <component :is="blockComponents[props.blockType]" :blockType="blockType" :block="props.block" />
 
                 </div>
             </div>
