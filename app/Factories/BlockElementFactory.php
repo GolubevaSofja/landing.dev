@@ -94,14 +94,11 @@ class BlockElementFactory
         }
     }
 
-//    public function createReviewsBlock(Block $block, array $review, array $company):void
-//    {
-//        $reviewCreate = $block->reviewBlocks()->create($review);
-//
-//        $reviewBlock = $reviewCreate
-//
-//
-//    }
+    public function saveReviewsBlock(Block $block, array $review):void
+    {
+        $block->reviewBlocks()->delete();
+        $block->reviewBlocks()->create($review);
+    }
 
     public function createTimelineBlock(Block $block, array $dropdown, array $dropdownElements, array $buttons):void
     {

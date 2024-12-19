@@ -1,84 +1,113 @@
 <script setup>
-import { reactive } from 'vue';
+import {reactive, defineProps, ref} from 'vue';
 import { useForm } from "@inertiajs/vue3";
 
-const companies = reactive([
-    {
-        name: '',
-        logo: '',
+const props = defineProps({
+    companies: {
+        type: Array,
+        required: true,
+        default: () => [],
     },
-]);
+    block: {
+        type: Object,
+        default: {
+            id: null,
+            blockIndex: 0,
+            review: {
+                picture:'',
+                comment:'',
+                name_surname_position:'',
+                stars_number: 0,
+            },
+            company: [],
+        },
+    },
+})
 
-function addCompany() {
-    companies.push({
-        name: '',
-        logo: '',
-    });
-}
+const showNewCompanyForm = ref(false);
+const selectedCompany = ref(null);
 
-function removeCompany(index) {
-    companies.splice(index, 1);
-}
+const newCompany = reactive({
+    name: '',
+    logo: '',
+});
 
 const form = useForm({
     blockType: 'Reviews block',
-    review: {
-        picture:'',
-        comment:'',
-        name_surname_position:'',
-        stars_number: 0,
-    },
+    review: {},
     company: [],
-    blockIndex: 0
+    company_id: null,
+    blockIndex: 0,
 });
 
+const toggleNewCompanyForm = () => {
+    showNewCompanyForm.value = !showNewCompanyForm.value;
+    newCompany.name = '';
+    newCompany.logo = '';
+};
+
 const submit = () => {
-    form.companies = companies;
+    if (showNewCompanyForm.value) {
+        form.company = { ...newCompany };
+        form.company_id = null;
+    } else if (selectedCompany.value) {
+        form.company_id = selectedCompany.value;
+        form.company = null;
+    }
+
     form.post(route('blocks.create'));
 };
 </script>
 
 <template>
     <form @submit.prevent="submit">
-<!--        <br><pre>reviews_blocks table</pre><br>-->
 
         <label for="picture">Picture:</label><br>
-        <input type="url" id="picture" v-model="form.reviews.picture"><br>
+        <input type="url" id="picture" v-model="form.review.picture"><br>
 
         <label for="comment">Comment:</label><br>
-        <input id="comment" type="text" v-model="form.reviews.comment" required /><br>
+        <input id="comment" type="text" v-model="form.review.comment" required /><br>
 
         <label for="name_surname_position">Name surname position:</label><br>
-        <input id="name_surname_position" type="text" v-model="form.reviews.name_surname_position" required/><br>
+        <input id="name_surname_position" type="text" v-model="form.review.name_surname_position" required/><br>
 
         <label for="stars_number">Stars number:</label><br>
-        <input id="stars_number" type="number" v-model="form.reviews.stars_number" required /><br>
+        <input id="stars_number" type="number" v-model="form.review.stars_number" required /><br>
 
+        <h2>Select Company</h2>
+        <select name="companies" id="companies" v-model="selectedCompany">
+            <option
+                v-for="company in companies"
+                :value="company.id"
+                :key="company.id"
+            >
+                {{ company.name }}
+            </option>
+        </select>
 
-<!--        <br><br><pre>companies table</pre><br>-->
+        <br>
+        <button type="button" @click="toggleNewCompanyForm">
+            {{ showNewCompanyForm ? 'Cancel New Company' : 'Add New Company' }}
+        </button>
 
-        <div v-for="(company, index) in companies" :key="index" class="mb-4">
-            <label :for="`name_${index}`">Company name:</label><br>
+        <div v-if="showNewCompanyForm" class="mt-4">
+            <h3>Add New Company</h3>
+            <label for="new_name">Company Name:</label><br>
             <input
-                :id="`name_${index}`"
+                id="new_name"
                 type="text"
-                v-model="company.name"
+                v-model="newCompany.name"
                 required
             ><br>
 
-            <label :for="`logo_${index}`">Company logo:</label><br>
+            <label for="new_logo">Company Logo:</label><br>
             <input
-                :id="`logo_${index}`"
+                id="new_logo"
                 type="url"
-                v-model="company.logo"
+                v-model="newCompany.logo"
                 required
             ><br>
-
-            <button type="button" @click="removeCompany(index)">Remove Company</button>
-            <hr>
         </div>
-
-        <button type="button" @click="addCompany">Add Company</button>
 
         <br><br>
         <label for="block_index">Block index:</label><br>

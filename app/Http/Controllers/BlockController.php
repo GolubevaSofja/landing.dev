@@ -7,6 +7,7 @@ use App\Http\Requests\BlockRequest;
 use App\Http\Resources\BlockWithColumnElementsAndPicturesResource;
 use App\Repositories\BlockRepository;
 use App\Repositories\BlockTypeRepository;
+use App\Repositories\CompanyRepository;
 use Illuminate\Http\Request;
 use App\Models\Block;
 use Inertia\Inertia;
@@ -35,6 +36,7 @@ class BlockController extends Controller
         private BlockTypeRepository $blockTypeRepository,
         private BlockRepository $blockRepository,
         private BlockElementFactory $blockElementFactory,
+        private CompanyRepository $companyRepository,
     ) {
     }
 
@@ -52,6 +54,7 @@ class BlockController extends Controller
     {
         return Inertia::render('HomePage', [
             'blockTypes' => $this->blockTypeRepository->all(),
+            'companies' => $this->companyRepository->all(),
         ]);
     }
 
@@ -140,6 +143,23 @@ class BlockController extends Controller
                 );
                 break;
             case self::REVIEWS_BLOCK:
+                $review = $request->input('review');
+                $companyId = $request->input('company_id');
+                $companyData = $request->input('company');
+
+                if (!$companyId && $companyData) {
+                    $company = $this->companyRepository->create(
+                        $companyData['name'],
+                        $companyData['logo']
+                    );
+                    $companyId = $company->id;
+                }
+
+                $review['company_id'] = $companyId;
+
+                $this->blockElementFactory->saveReviewsBlock($block, $review);
+
+                break;
             case self::TIMELINE_BLOCK:
                 $this->blockElementFactory->createTimelineBlock(
                     $block,

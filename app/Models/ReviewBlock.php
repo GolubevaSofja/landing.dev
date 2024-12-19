@@ -14,6 +14,7 @@ class ReviewBlock extends Model
         'comment',
         'name_surname_position',
         'stars_number',
+        'company_id'
     ];
 
     public function company(){
