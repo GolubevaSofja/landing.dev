@@ -5,6 +5,19 @@ namespace App\Http\Controllers;
 use App\Factories\BlockElementFactory;
 use App\Http\Requests\BlockRequest;
 use App\Http\Resources\BlockWithColumnElementsAndPicturesResource;
+use App\Http\Resources\BlockWithDropdownElementsAndPictureResource;
+use App\Http\Resources\BlockWithHeadingAndButtonsResource;
+use App\Http\Resources\BlockWithHeadingAndCarouselResource;
+use App\Http\Resources\BlockWithHeadingAndColumnElementsBasicResource;
+use App\Http\Resources\BlockWithHeadingAndColumnElementsBoldResource;
+use App\Http\Resources\CenteredTextAndPictureBlockResource;
+use App\Http\Resources\FooterBlockResource;
+use App\Http\Resources\InitialBlockResource;
+use App\Http\Resources\NavigationBlockResource;
+use App\Http\Resources\ReviewsBlockResource;
+use App\Http\Resources\TimelineBlockResource;
+use App\Http\Resources\TrustedOrganizationsBlockResource;
+use App\Http\Resources\WelcomingBlockResource;
 use App\Repositories\BlockRepository;
 use App\Repositories\BlockTypeRepository;
 use App\Repositories\CompanyRepository;
@@ -74,14 +87,14 @@ class BlockController extends Controller
 
         switch ($blockType->type) {
             case self::BLOCK_WITH_COLUMNS_AND_PICTURES:
-                $this->blockElementFactory->createBlockWithColumnsAndPictures(
+                $this->blockElementFactory->saveBlockWithColumnsAndPictures(
                     $block,
                     $request->input('paragraph'),
                     $request->input('columnElements'),
                 );
                 break;
             case self::BLOCK_WITH_DROPDOWNS_AND_PICTURES:
-                $this->blockElementFactory->createBlockWithDropdownsAndPictures(
+                $this->blockElementFactory->saveBlockWithDropdownsAndPictures(
                     $block,
                     $request->input('dropdown'),
                     $request->input('dropdownElements'),
@@ -89,54 +102,54 @@ class BlockController extends Controller
                 );
                 break;
             case self::BLOCK_WITH_HEADING_AND_BUTTONS:
-                $this->blockElementFactory->createBlockWithHeadingAndButtons(
+                $this->blockElementFactory->saveBlockWithHeadingAndButtons(
                     $block,
                     $request->input('headingParagraph'),
                     $request->input('buttons'),
                 );
                 break;
             case self::BLOCK_WITH_HEADING_AND_CAROUSELS:
-                $this->blockElementFactory->createBlockWithHeadingAndCarousels(
+                $this->blockElementFactory->saveBlockWithHeadingAndCarousels(
                     $block,
                     $request->input('headingParagraph'),
                     $request->input('carousels'),
                 );
                 break;
             case self::BLOCK_WITH_HEADING_AND_COLUMNS_BASIC:
-                $this->blockElementFactory->createBlockWithHeadingAndColumnsBasic(
+                $this->blockElementFactory->saveBlockWithHeadingAndColumnsBasic(
                     $block,
                     $request->input('heading'),
                     $request->input('columnElements'),
                 );
                 break;
             case self::BLOCK_WITH_HEADING_AND_COLUMNS_BOLD:
-                $this->blockElementFactory->createBlockWithHeadingAndColumnsBold(
+                $this->blockElementFactory->saveBlockWithHeadingAndColumnsBold(
                     $block,
                     $request->input('heading'),
                     $request->input('columnElements'),
                 );
                 break;
             case self::BLOCK_WITH_CENTERED_TEXT_AND_PICTURE:
-                $this->blockElementFactory->createCenteredTextAndPictureBlock(
+                $this->blockElementFactory->saveCenteredTextAndPictureBlock(
                     $block,
                     $request->input('centeredText'),
                 );
                 break;
             case self::FOOTER_BLOCK:
-                $this->blockElementFactory->createFooterBlock(
+                $this->blockElementFactory->saveFooterBlock(
                     $block,
                     $request->input('footer'),
                 );
                 break;
             case self::INITIAL_BLOCK:
-                $this->blockElementFactory->createInitialBlock(
+                $this->blockElementFactory->saveInitialBlock(
                     $block,
                     $request->input('headingParagraph'),
                     $request->input('buttons'),
                 );
                 break;
             case self::NAVIGATION_BLOCK:
-                $this->blockElementFactory->createNavigationBlock(
+                $this->blockElementFactory->saveNavigationBlock(
                     $block,
                     $request->input('headBlock'),
                     $request->input('headBlockElements'),
@@ -161,7 +174,7 @@ class BlockController extends Controller
 
                 break;
             case self::TIMELINE_BLOCK:
-                $this->blockElementFactory->createTimelineBlock(
+                $this->blockElementFactory->saveTimelineBlock(
                     $block,
                     $request->input('dropdown'),
                     $request->input('dropdownElements'),
@@ -169,14 +182,14 @@ class BlockController extends Controller
                 );
                 break;
             case self::TRUSTED_ORGANIZATIONS_BLOCK:
-                $this->blockElementFactory->createTrustedOrganizationsBlock(
+                $this->blockElementFactory->saveTrustedOrganizationsBlock(
                     $block,
                     $request->input('paragraph'),
                     $request->input('imageLinkElements'),
                 );
                 break;
             case self::WELCOMING_BLOCK:
-                $this->blockElementFactory->createWelcomingBlock(
+                $this->blockElementFactory->saveWelcomingBlock(
                     $block,
                     $request->input('heading'),
                 );
@@ -221,20 +234,45 @@ class BlockController extends Controller
                 $blockData = new BlockWithColumnElementsAndPicturesResource($block);
                 break;
             case self::BLOCK_WITH_DROPDOWNS_AND_PICTURES:
+                $blockData = new BlockWithDropdownElementsAndPictureResource($block);
+                break;
             case self::BLOCK_WITH_HEADING_AND_BUTTONS:
+                $blockData = new BlockWithHeadingAndButtonsResource($block);
+                break;
             case self::BLOCK_WITH_HEADING_AND_CAROUSELS:
+                $blockData = new BlockWithHeadingAndCarouselResource($block);
+                break;
             case self::BLOCK_WITH_HEADING_AND_COLUMNS_BASIC:
+                $blockData = new BlockWithHeadingAndColumnElementsBasicResource($block);
+                break;
             case self::BLOCK_WITH_HEADING_AND_COLUMNS_BOLD:
+                $blockData = new BlockWithHeadingAndColumnElementsBoldResource($block);
+                break;
             case self::BLOCK_WITH_CENTERED_TEXT_AND_PICTURE:
+                $blockData = new CenteredTextAndPictureBlockResource($block);
+                break;
             case self::FOOTER_BLOCK:
+                $blockData = new FooterBlockResource($block);
+                break;
             case self::INITIAL_BLOCK:
+                $blockData = new InitialBlockResource($block);
+                break;
             case self::NAVIGATION_BLOCK:
+                $blockData = new NavigationBlockResource($block);
+                break;
             case self::REVIEWS_BLOCK:
+                $blockData = new ReviewsBlockResource($block);
+                break;
             case self::TIMELINE_BLOCK:
+                $blockData = new TimelineBlockResource($block);
+                break;
             case self::TRUSTED_ORGANIZATIONS_BLOCK:
+                $blockData = new TrustedOrganizationsBlockResource($block);
+                break;
             case self::WELCOMING_BLOCK:
+                $blockData = new WelcomingBlockResource($block);
+                break;
             default:
-                $message = 'This block type is not supported';
         }
 
         return Inertia::render('BlockEdit', [
@@ -249,7 +287,114 @@ class BlockController extends Controller
      */
     public function update(Request $request, Block $block)
     {
-        dd($block, $request->input());
+        //dd($block, $request->input());
+        $blockType = $block->getTypeAttribute();
+        $message = 'Block updated successfully';
+
+        switch ($blockType) {
+            case self::BLOCK_WITH_COLUMNS_AND_PICTURES:
+                $this->blockElementFactory->saveBlockWithColumnsAndPictures(
+                    $block,
+                    $request->input('paragraph'),
+                    $request->input('columnElements'),
+                );
+                break;
+            case self::BLOCK_WITH_DROPDOWNS_AND_PICTURES:
+                $this->blockElementFactory->saveBlockWithDropdownsAndPictures(
+                    $block,
+                    $request->input('dropdown'),
+                    $request->input('dropdownElements'),
+                    $request->input('buttons'),
+                );
+                break;
+            case self::BLOCK_WITH_HEADING_AND_BUTTONS:
+                $this->blockElementFactory->saveBlockWithHeadingAndButtons(
+                    $block,
+                    $request->input('headingParagraph'),
+                    $request->input('buttons'),
+                );
+                break;
+            case self::BLOCK_WITH_HEADING_AND_CAROUSELS:
+                $this->blockElementFactory->saveBlockWithHeadingAndCarousels(
+                    $block,
+                    $request->input('headingParagraph'),
+                    $request->input('carousels'),
+                );
+                break;
+            case self::BLOCK_WITH_HEADING_AND_COLUMNS_BASIC:
+                $this->blockElementFactory->saveBlockWithHeadingAndColumnsBasic(
+                    $block,
+                    $request->input('heading'),
+                    $request->input('columnElements'),
+                );
+                break;
+            case self::BLOCK_WITH_HEADING_AND_COLUMNS_BOLD:
+                $this->blockElementFactory->saveBlockWithHeadingAndColumnsBold(
+                    $block,
+                    $request->input('heading'),
+                    $request->input('columnElements'),
+                );
+                break;
+            case self::BLOCK_WITH_CENTERED_TEXT_AND_PICTURE:
+                $this->blockElementFactory->saveCenteredTextAndPictureBlock(
+                    $block,
+                    $request->input('centeredText'),
+                );
+                break;
+            case self::FOOTER_BLOCK:
+                $this->blockElementFactory->saveFooterBlock(
+                    $block,
+                    $request->input('footer'),
+                );
+                break;
+            case self::INITIAL_BLOCK:
+                $this->blockElementFactory->saveInitialBlock(
+                    $block,
+                    $request->input('headingParagraph'),
+                    $request->input('buttons'),
+                );
+                break;
+            case self::NAVIGATION_BLOCK:
+                $this->blockElementFactory->saveNavigationBlock(
+                    $block,
+                    $request->input('headBlock'),
+                    $request->input('headBlockElements'),
+                );
+                break;
+            case self::REVIEWS_BLOCK:
+                $review = $request->input('review');
+                $this->blockElementFactory->saveReviewsBlock($block, $review);
+                break;
+            case self::TIMELINE_BLOCK:
+                $this->blockElementFactory->saveTimelineBlock(
+                    $block,
+                    $request->input('dropdown'),
+                    $request->input('dropdownElements'),
+                    $request->input('buttons'),
+                );
+                break;
+            case self::TRUSTED_ORGANIZATIONS_BLOCK:
+                $this->blockElementFactory->saveTrustedOrganizationsBlock(
+                    $block,
+                    $request->input('paragraph'),
+                    $request->input('imageLinkElements'),
+                );
+                break;
+            case self::WELCOMING_BLOCK:
+                $this->blockElementFactory->saveWelcomingBlock(
+                    $block,
+                    $request->input('heading'),
+                );
+                break;
+
+            default:
+                $message = 'This block type is not supported';
+        }
+
+        return Inertia::render('Dashboard', [
+            'blocks' => $this->blockRepository->all(),
+            'message' => $message,
+        ]);
     }
 
     /**
@@ -262,6 +407,7 @@ class BlockController extends Controller
         $block->delete();
 
         return Inertia::render('Dashboard', [
+            'blocks' => $this->blockRepository->all(),
             'message' => 'Block deleted successfully',
         ]);
     }

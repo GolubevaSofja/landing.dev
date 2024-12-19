@@ -1,11 +1,31 @@
 <script setup>
-import { reactive } from 'vue';
+import { defineProps } from 'vue';
 import { useForm } from "@inertiajs/vue3";
 
-const buttons = reactive([]);
+const props = defineProps({
+    block: {
+        type: Object,
+        default: {
+            id: null,
+            blockIndex: 0,
+            headingParagraph: {
+                heading: '',
+                paragraph: '',
+            },
+            buttons: [],
+        },
+    },
+});
+
+const form = useForm({
+    blockType: 'Block with heading and buttons',
+    headingParagraph: props.block.headingParagraph,
+    buttons: props.block.buttons,
+    blockIndex: props.block.blockIndex,
+});
 
 const addButton = () => {
-    buttons.push({
+    form.buttons.push({
         text: '',
         link: '',
         color: '',
@@ -14,22 +34,15 @@ const addButton = () => {
 }
 
 function removeButton(index) {
-    buttons.splice(index, 1);
+    form.buttons.splice(index, 1);
 }
 
-const form = useForm({
-    blockType: 'Block with heading and buttons',
-    headingParagraph: {
-        heading: '',
-        paragraph: '',
-    },
-    buttons: [],
-    blockIndex: 0
-});
-
 const submit = () => {
-    form.buttons = buttons;
-    form.post(route('blocks.create'));
+    if (props.block.id) {
+        form.post(route('blocks.update', props.block.id));
+    } else {
+        form.post(route('blocks.create'));
+    }
 };
 </script>
 
@@ -45,7 +58,7 @@ const submit = () => {
 
         <br><br><p>Buttons</p><br>
 
-        <div v-for="(button, index) in buttons" :key="index" class="mb-4">
+        <div v-for="(button, index) in form.buttons" :key="index" class="mb-4">
             <label :for="`text_${index}`">Button text:</label><br>
             <input
                 :id="`text_${index}`"

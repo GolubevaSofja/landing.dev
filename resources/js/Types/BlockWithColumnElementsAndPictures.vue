@@ -27,7 +27,7 @@ function addColumnElement() {
         picture_position: '',
         header: '',
         paragraph: '',
-        index: props.block.columnElements.length + 1,
+        index: form.columnElements.length + 1,
         width: ''
     });
 }
@@ -57,8 +57,8 @@ const submit = () => {
             <label :for="`picture-${index}`">Picture:</label><br>
             <input :id="`picture-${index}`" v-model="element.picture" type="url" name="picture" /><br>
 
-            <label :for="`heading-${index}`">Heading:</label><br>
-            <input :id="`heading-${index}`" v-model="element.heading" type="text" name="heading" /><br>
+            <label :for="`header-${index}`">Header:</label><br>
+            <input :id="`header-${index}`" v-model="element.header" type="text" name="header" /><br>
 
             <label :for="`paragraph-${index}`">Paragraph:</label><br>
             <input :id="`paragraph-${index}`" v-model="element.paragraph" type="text" name="paragraph" /><br>

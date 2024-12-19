@@ -1,24 +1,40 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
+import {defineProps} from "vue";
+
+const props = defineProps({
+    block: {
+        type: Object,
+        default: {
+            id: null,
+            blockIndex: 0,
+            footer: {
+                picture:'',
+                heading:'',
+                paragraph:'',
+                form_text:'',
+                button_text:'',
+                button_color:'',
+                company_name:'',
+                info:'',
+                copyrights:'',
+            },
+        },
+    },
+});
 
 const form = useForm({
     blockType: 'Footer block',
-    footer: {
-        picture:'',
-        heading:'',
-        paragraph:'',
-        form_text:'',
-        button_text:'',
-        button_color:'',
-        company_name:'',
-        info:'',
-        copyrights:'',
-    },
-    blockIndex: 0
+    footer: props.block.footer,
+    blockIndex: props.block.blockIndex,
 });
 
 const submit = () => {
-    form.post(route('blocks.create'));
+    if (props.block.id) {
+        form.post(route('blocks.update', props.block.id));
+    } else {
+        form.post(route('blocks.create'));
+    }
 };
 
 </script>

@@ -27,6 +27,11 @@ defineProps({
         type: String,
         required: false,
     },
+    companies: {
+        type: Array,
+        required: true,
+        default: () => [],
+    },
 });
 
 const blockComponents = {
@@ -85,19 +90,11 @@ const selectedBlock = ref(null);
                            </option>
                        </select>
 
-<!--                       <button @click="addBlock">+</button>-->
                        <br><br>
-
-<!--                       <pre>Selected Block: {{ selectedBlock }}</pre>-->
-<!--                       <pre>Added Blocks: {{ addedBlocks }}</pre>-->
-
-<!--                       <div v-for="(block, index) in addedBlocks" :key="index" class="mb-4">-->
-<!--                           <component :is="blockComponents[block]" />-->
-<!--                       </div>-->
 
                        <h3>Selected Block:</h3><br>
                        <div v-if="selectedBlock">
-                           <component :is="blockComponents[selectedBlock]" />
+                           <component :is="blockComponents[selectedBlock]" v-bind="{ companies }" />
                        </div>
 
 

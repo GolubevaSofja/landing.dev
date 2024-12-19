@@ -1,22 +1,37 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
+import {defineProps} from "vue";
 
+const props = defineProps({
+    block: {
+        type: Object,
+        default: {
+            id: null,
+            blockIndex: 0,
+            centeredText: {
+                subheading:'',
+                heading:'',
+                paragraph:'',
+                picture:'',
+                picture_size:'',
+                alt_text:'',
+            },
+        },
+    },
+});
 
 const form = useForm({
     blockType: 'Centered text and picture block',
-    centeredText: {
-        subheading:'',
-        heading:'',
-        paragraph:'',
-        picture:'',
-        picture_size:'',
-        alt_text:'',
-    },
-    blockIndex: 0
+    centeredText: props.block.centeredText,
+    blockIndex: props.block.blockIndex,
 });
 
 const submit = () => {
-    form.post(route('blocks.create'));
+    if (props.block.id) {
+        form.post(route('blocks.update', props.block.id));
+    } else {
+        form.post(route('blocks.create'));
+    }
 };
 </script>
 

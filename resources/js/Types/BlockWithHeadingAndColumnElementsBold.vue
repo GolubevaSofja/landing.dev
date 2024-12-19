@@ -1,36 +1,49 @@
 <script setup>
-import { reactive } from 'vue';
+import {defineProps} from 'vue';
 import { useForm } from "@inertiajs/vue3";
 
-const columnElements = reactive([]);
+const props = defineProps({
+    block: {
+        type: Object,
+        default: {
+            id: null,
+            blockIndex: 0,
+            heading: {
+                subheading: '',
+                heading: '',
+            },
+            columnElements: [],
+        },
+    },
+});
+
+const form = useForm({
+    blockType: 'Block with heading and column elements / bold',
+    heading: props.block.heading,
+    columnElements: props.block.columnElements,
+    blockIndex: props.block.blockIndex,
+});
 
 function addColumnElement() {
-    columnElements.push({
+    form.columnElements.push({
         picture: '',
-        heading: '',
+        header: '',
         paragraph: '',
-        index: columnElements.length + 1,
+        index: form.columnElements.length + 1,
         width: '',
     });
 }
 
 function removeColumnElement(index) {
-    columnElements.splice(index, 1);
+    form.columnElements.splice(index, 1);
 }
 
-const form = useForm({
-    blockType: 'Block with heading and column elements / bold',
-    heading: {
-        subheading: '',
-        heading: '',
-    },
-    columnElements: [],
-    blockIndex: 0
-});
-
 const submit = () => {
-    form.columnElements = columnElements;
-    form.post(route('blocks.create'));
+    if (props.block.id) {
+        form.post(route('blocks.update', props.block.id));
+    } else {
+        form.post(route('blocks.create'));
+    }
 };
 </script>
 
@@ -46,7 +59,7 @@ const submit = () => {
 
         <br><br><p>Column elements</p><br>
 
-        <div v-for="(element, index) in columnElements" :key="index" class="mb-4">
+        <div v-for="(element, index) in form.columnElements" :key="index" class="mb-4">
             <label :for="`picture_${index}`">Picture:</label><br>
             <input
                 :id="`picture_${index}`"
@@ -54,11 +67,11 @@ const submit = () => {
                 v-model="element.picture"
             ><br>
 
-            <label :for="`heading_${index}`">Heading:</label><br>
+            <label :for="`header_${index}`">Header:</label><br>
             <input
-                :id="`heading_${index}`"
+                :id="`header_${index}`"
                 type="text"
-                v-model="element.heading"
+                v-model="element.header"
             ><br>
 
             <label :for="`paragraph_${index}`">Paragraph:</label><br>

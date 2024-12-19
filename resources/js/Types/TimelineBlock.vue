@@ -1,29 +1,56 @@
 <script setup>
-import {reactive} from 'vue';
+import {defineProps} from 'vue';
 import {useForm} from "@inertiajs/vue3";
 
-const dropdownElements = reactive([]);
+const props = defineProps({
+    block: {
+        type: Object,
+        default: {
+            id: null,
+            blockIndex: 0,
+            dropdown: {
+                picture: '',
+                picture_size: '',
+                alt_text: '',
+                subheading: '',
+                heading_logo: '',
+                heading: '',
+                element_type: 'timeline',
+                orientation: '',
+                main_color: '',
+            },
+            dropdownElements: [],
+            buttons: [],
+        },
+    },
+});
+
+const form = useForm({
+    blockType: 'Timeline block',
+    dropdown: props.block.dropdown,
+    dropdownElements: props.block.dropdownElements,
+    buttons: props.block.buttons,
+    blockIndex: props.block.blockIndex,
+});
 
 const addDropdownElement = () => {
-    dropdownElements.push({
+    form.dropdownElements.push({
         heading: '',
         paragraph1: '',
         paragraph2: '',
         link: '',
         link_text: '',
-        index: dropdownElements.length + 1,
+        index: form.dropdownElements.length + 1,
         active_element: false,
     });
 }
 
 const removeDropdownElement = (index) => {
-    dropdownElements.splice(index, 1);
+    form.dropdownElements.splice(index, 1);
 }
 
-const buttons = reactive([]);
-
 const addButton = () => {
-    buttons.push({
+    form.buttons.push({
         text: '',
         link: '',
         color: '',
@@ -32,31 +59,15 @@ const addButton = () => {
 }
 
 const removeButton = (index) => {
-    buttons.splice(index, 1);
+    form.buttons.splice(index, 1);
 }
 
-const form = useForm({
-    blockType: 'Timeline block',
-    dropdown: {
-        picture: '',
-        picture_size: '',
-        alt_text: '',
-        subheading: '',
-        heading_logo: '',
-        heading: '',
-        element_type: 'timeline',
-        orientation: '',
-        main_color: '',
-    },
-    dropdownElements: [],
-    buttons: [],
-    blockIndex: 0
-});
-
 const submit = () => {
-    form.dropdownElements = dropdownElements;
-    form.buttons = buttons;
-    form.post(route('blocks.create'));
+    if (props.block.id) {
+        form.post(route('blocks.update', props.block.id));
+    } else {
+        form.post(route('blocks.create'));
+    }
 };
 </script>
 
@@ -93,7 +104,7 @@ const submit = () => {
         <input id="main_color" v-model="form.dropdown.main_color" type="color"/><br>
 
         <h3>Dropdown Elements</h3>
-        <div v-for="(element, index) in dropdownElements" :key="index" class="mb-4">
+        <div v-for="(element, index) in form.dropdownElements" :key="index" class="mb-4">
             <label for="heading">Heading:</label><br>
             <input type="text" v-model="element.heading" required/><br>
 
@@ -122,7 +133,7 @@ const submit = () => {
         <button type="button" @click="addDropdownElement">Add Dropdown Element</button>
 
         <h3>Buttons</h3>
-        <div v-for="(button, index) in buttons" :key="index" class="mb-4">
+        <div v-for="(button, index) in form.buttons" :key="index" class="mb-4">
             <label for="text">Button text:</label><br>
             <input type="text" v-model="button.text" required/><br>
 

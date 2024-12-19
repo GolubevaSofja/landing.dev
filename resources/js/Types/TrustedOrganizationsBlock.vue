@@ -1,31 +1,44 @@
 <script setup>
-import { reactive } from 'vue';
+import {defineProps} from 'vue';
 import { useForm } from "@inertiajs/vue3";
 
-const imageLinkElements = reactive([]);
+const props = defineProps({
+    block: {
+        type: Object,
+        default: {
+            id: null,
+            blockIndex: 0,
+            paragraph: '',
+            imageLinkElements: [],
+        },
+    },
+});
 
 function addElement() {
-    imageLinkElements.push({
+    form.imageLinkElements.push({
         picture: '',
         link: '',
-        index: imageLinkElements.length + 1,
+        index: form.imageLinkElements.length + 1,
     });
 }
 
 function removeElement(index) {
-    imageLinkElements.splice(index, 1);
+    form.imageLinkElements.splice(index, 1);
 }
 
 const form = useForm({
     blockType: 'Trusted organisations block',
-    paragraph:'',
-    imageLinkElements: [],
-    blockIndex: 0
+    paragraph: props.block.paragraph,
+    imageLinkElements: props.block.imageLinkElements,
+    blockIndex: props.block.blockIndex,
 });
 
 const submit = () => {
-    form.imageLinkElements = imageLinkElements;
-    form.post(route('blocks.create'));
+    if (props.block.id) {
+        form.post(route('blocks.update', props.block.id));
+    } else {
+        form.post(route('blocks.create'));
+    }
 };
 </script>
 
@@ -39,7 +52,7 @@ const submit = () => {
 
         <br><p>Image link elements</p><br>
 
-        <div v-for="(element, index) in imageLinkElements" :key="index" class="mb-4">
+        <div v-for="(element, index) in form.imageLinkElements" :key="index" class="mb-4">
             <label :for="`picture_${index}`">Picture URL:</label><br>
             <input
                 :id="`picture_${index}`"

@@ -1,36 +1,49 @@
 <script setup>
-import { reactive } from 'vue';
+import {defineProps} from 'vue';
 import { useForm } from "@inertiajs/vue3";
 
-const headBlockElements = reactive([]);
+const props = defineProps({
+    block: {
+        type: Object,
+        default: {
+            id: null,
+            blockIndex: 0,
+            headBlock: {
+                logo:'',
+                bg_color:'',
+                font_color:'',
+                meta_name:'',
+                meta_description:'',
+                scripts:'',
+            },
+            headBlockElements: [],
+        },
+    },
+});
 
 function addElement() {
-    headBlockElements.push({
+    form.headBlockElements.push({
         name: '',
     });
 }
 
 function removeElement(index) {
-    headBlockElements.splice(index, 1);
+    form.headBlockElements.splice(index, 1);
 }
 
 const form = useForm({
     blockType: 'Navigation block',
-    headBlock: {
-        logo:'',
-        bg_color:'',
-        font_color:'',
-        meta_name:'',
-        meta_description:'',
-        scripts:'',
-    },
-    headBlockElements: [],
-    blockIndex: 0
+    headBlock: props.block.headBlock,
+    headBlockElements: props.block.headBlockElements,
+    blockIndex: props.block.blockIndex,
 });
 
 const submit = () => {
-    form.headBlockElements = headBlockElements;
-    form.post(route('blocks.create'));
+    if (props.block.id) {
+        form.post(route('blocks.update', props.block.id));
+    } else {
+        form.post(route('blocks.create'));
+    }
 };
 </script>
 
@@ -59,7 +72,7 @@ const submit = () => {
 
         <br><p>Elements</p><br>
 
-        <div v-for="(element, index) in headBlockElements" :key="index" class="mb-4">
+        <div v-for="(element, index) in form.headBlockElements" :key="index" class="mb-4">
             <label :for="`name_${index}`">Element name:</label><br>
             <input
                 :id="`name_${index}`"

@@ -1,17 +1,33 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
+import {defineProps} from "vue";
+
+const props = defineProps({
+    block: {
+        type: Object,
+        default: {
+            id: null,
+            blockIndex: 0,
+            heading: {
+                subheading: '',
+                heading: '',
+            },
+        },
+    },
+});
 
 const form = useForm({
     blockType: 'Welcoming block',
-    heading: {
-        subheading: '',
-        heading: '',
-    },
-    blockIndex: 0
+    heading: props.block.heading,
+    blockIndex: props.block.blockIndex,
 });
 
 const submit = () => {
-    form.post(route('blocks.create'));
+    if (props.block.id) {
+        form.post(route('blocks.update', props.block.id));
+    } else {
+        form.post(route('blocks.create'));
+    }
 };
 </script>
 

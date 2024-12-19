@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import {defineProps} from "vue";
 import { Inertia } from '@inertiajs/inertia';
 
@@ -9,15 +9,28 @@ defineProps({
         type: Array,
         required: true,
     },
+    message: {
+        type: String,
+        required: false,
+    },
 });
 
 const deleteBlock = (id) => {
     if (confirm("Are you sure you want to delete this block?")) {
-        Inertia.visit(`/blocks/${id}`, {
-            method: 'delete',
-            preserveScroll: true,
-            preserveState: false,
-        });
+        // Inertia.visit(`/blocks/${id}`, {
+        //     method: 'delete',
+        //     preserveScroll: true,
+        //     preserveState: true,
+        // });
+
+        // router.visit(`/blocks/${id}`, {
+        //     method: 'delete'
+        // })
+
+        router.delete(`/blocks/${id}`, {
+                preserveScroll: true,
+                preserveState: true,
+        })
     }
 };
 </script>
@@ -33,10 +46,12 @@ const deleteBlock = (id) => {
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div v-if="blocks.length">
-                        <div class="p-6 text-gray-900">Blocks:</div>
-                        <table class="w-full p-4 text-left">
-                            <thead>
+                    <div class="p-6 text-gray-900">
+                    <div v-if="message" class="bg-lime-100 p-4 rounded-sm mb-4">{{ message }}</div>
+                        <div v-if="blocks.length">
+                            <div class="p-6 text-gray-900">Blocks:</div>
+                            <table class="w-full p-4 text-left">
+                                <thead>
                                 <tr>
                                     <th class="p-4">ID</th>
                                     <th class="p-4">Type</th>
@@ -45,8 +60,8 @@ const deleteBlock = (id) => {
                                     <th class="p-4">Updated</th>
                                     <th class="p-4">Actions</th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 <tr v-for="block in blocks" :key="block.id">
                                     <td class="p-4">{{ block.id }}</td>
                                     <td class="p-4">{{ block.type }}</td>
@@ -60,11 +75,12 @@ const deleteBlock = (id) => {
                                         </button>
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div v-else class="p-6 text-gray-900">No blocks yet</div>
                     </div>
-                    <div v-else class="p-6 text-gray-900">No blocks yet</div>
-                </div>
+                    </div>
             </div>
         </div>
     </AuthenticatedLayout>

@@ -1,11 +1,24 @@
 <script setup>
-import { reactive } from 'vue';
+import {defineProps} from 'vue';
 import { useForm } from "@inertiajs/vue3";
 
-const carousels = reactive([]);
+const props = defineProps({
+    block: {
+        type: Object,
+        default: {
+            id: null,
+            blockIndex: 0,
+            headingParagraph: {
+                heading: '',
+                paragraph: '',
+            },
+            carousels: [],
+        },
+    },
+});
 
 function addCarousel() {
-    carousels.push({
+    form.carousels.push({
         heading: '',
         paragraph: '',
         link: '',
@@ -14,22 +27,22 @@ function addCarousel() {
 }
 
 function removeCarousel(index) {
-    carousels.splice(index, 1);
+    form.carousels.splice(index, 1);
 }
 
 const form = useForm({
     blockType: 'Block with heading and carousel',
-    headingParagraph: {
-        heading: '',
-        paragraph: '',
-    },
-    carousels: [],
-    blockIndex: 0
+    headingParagraph: props.block.headingParagraph,
+    carousels: props.block.carousels,
+    blockIndex: props.block.blockIndex,
 });
 
 const submit = () => {
-    form.carousels = carousels;
-    form.post(route('blocks.create'));
+    if (props.block.id) {
+        form.post(route('blocks.update', props.block.id));
+    } else {
+        form.post(route('blocks.create'));
+    }
 };
 </script>
 
@@ -45,7 +58,7 @@ const submit = () => {
 
         <br><br><p>Carousels</p><br>
 
-        <div v-for="(carousel, index) in carousels" :key="index" class="mb-4">
+        <div v-for="(carousel, index) in form.carousels" :key="index" class="mb-4">
             <label :for="`heading_${index}`">Carousel heading:</label><br>
             <input
                 :id="`heading_${index}`"

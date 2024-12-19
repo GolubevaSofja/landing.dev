@@ -5,20 +5,22 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BlockWithColumnElementsAndPicturesResource extends JsonResource
+class BlockWithHeadingAndColumnElementsBasicResource extends JsonResource
 {
-    public function toArray(Request $request = null)
-    {
+    public function toArray(Request $request = null){
         $block = $this->resource;
         $blockData = $block->load([
-            'paragraphBlock',
+            'headingBlocks',
             'columnElements',
         ]);
 
         return [
             'id' => $blockData->id,
             'blockIndex' => $blockData->index,
-            'paragraph' => $blockData->paragraphBlock->paragraph,
+            'heading' => $blockData->headingBlocks->first() ? [
+                'subheading' => $blockData->headingBlocks->first()->subheading,
+                'heading' => $blockData->headingBlocks->first()->heading,
+            ] : null,
             'columnElements' => $blockData->columnElements->map(function ($columnElement) {
                 return [
                     'picture' => $columnElement->picture,
