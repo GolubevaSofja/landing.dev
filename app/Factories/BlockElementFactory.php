@@ -6,89 +6,108 @@ use App\Models\Block;
 
 class BlockElementFactory
 {
-    public function createBlockWithColumnsAndPictures(Block $block, string $paragraph, array $columns): void
+    public function saveBlockWithColumnsAndPictures(Block $block, string $paragraph, array $columns): void
     {
-        $block->paragraphBlock()->create([
+        $block->paragraphBlocks()->delete();
+        $block->paragraphBlocks()->create([
             'paragraph' => $paragraph,
         ]);
 
+        $block->columnElements()->delete();
         foreach ($columns as $column) {
             $block->columnElements()->create($column);
         }
     }
 
-    public function createBlockWithDropdownsAndPictures(Block $block, array $dropdown, array $dropdownElements, array $buttons): void
+    public function saveBlockWithDropdownsAndPictures(Block $block, array $dropdown, array $dropdownElements, array $buttons): void
     {
+        $block->dropdownBlocks()->delete();
         $block->dropdownBlocks()->create($dropdown);
 
+        $block->dropdownBlockElements()->delete();
         foreach ($dropdownElements as $element) {
             $block->dropdownBlockElements()->create($element);
         }
 
+        $block->buttons()->delete();
         foreach ($buttons as $button) {
             $block->buttons()->create($button);
         }
     }
 
-    public function createBlockWithHeadingAndButtons(Block $block, array $headingParagraph, array $buttons) :void
+    public function saveBlockWithHeadingAndButtons(Block $block, array $headingParagraph, array $buttons) :void
     {
+        $block->headingParagraphBlocks()->delete();
         $block->headingParagraphBlocks()->create($headingParagraph);
 
+        $block->buttons()->delete();
         foreach ($buttons as $button) {
             $block->buttons()->create($button);
         }
     }
 
-    public function createBlockWithHeadingAndCarousels(Block $block, array $headingParagraph, array $carousels):void
+    public function saveBlockWithHeadingAndCarousels(Block $block, array $headingParagraph, array $carousels):void
     {
+        $block->headingParagraphBlocks()->delete();
         $block->headingParagraphBlocks()->create($headingParagraph);
 
+        $block->carousels()->delete();
         foreach ($carousels as $carousel) {
             $block->carousels()->create($carousel);
         }
     }
 
-    public function createBlockWithHeadingAndColumnsBasic(Block $block, array $heading, array $columnElements):void
+    public function saveBlockWithHeadingAndColumnsBasic(Block $block, array $heading, array $columnElements):void
     {
+        $block->headingBlocks()->delete();
         $block->headingBlocks()->create($heading);
 
+        $block->columnElements()->delete();
         foreach ($columnElements as $columnElement) {
             $block->columnElements()->create($columnElement);
         }
     }
 
-    public function createBlockWithHeadingAndColumnsBold(Block $block, array $heading, array $columnElements):void
+    public function saveBlockWithHeadingAndColumnsBold(Block $block, array $heading, array $columnElements):void
     {
+        $block->headingBlocks()->delete();
         $block->headingBlocks()->create($heading);
 
+        $block->columnElements()->delete();
         foreach ($columnElements as $columnElement) {
             $block->columnElements()->create($columnElement);
         }
     }
 
-    public function createCenteredTextAndPictureBlock(Block $block, array $centeredText):void
+    public function saveCenteredTextAndPictureBlock(Block $block, array $centeredText):void
     {
+        $block->centeredPictureBlocks()->delete();
         $block->centeredPictureBlocks()->create($centeredText);
     }
 
-    public function createFooterBlock(Block $block, array $footer):void
+    public function saveFooterBlock(Block $block, array $footer):void
     {
+        $block->footerBlocks()->delete();
         $block->footerBlocks()->create($footer);
     }
 
-    public function createInitialBlock(Block $block, array $headingParagraph, array $buttons):void
+    public function saveInitialBlock(Block $block, array $headingParagraph, array $buttons):void
     {
+        $block->headingParagraphBlocks()->delete();
         $block->headingParagraphBlocks()->create($headingParagraph);
 
+        $block->buttons()->delete();
         foreach ($buttons as $button) {
             $block->buttons()->create($button);
         }
     }
 
-    public function createNavigationBlock(Block $block, array $headBlock, array $headBlockElements):void
+    public function saveNavigationBlock(Block $block, array $headBlock, array $headBlockElements):void
     {
+        $block->headBlocks()->delete();
         $block->headBlocks()->create($headBlock);
 
+        $block->headBlockElements()->delete();
         foreach ($headBlockElements as $headBlockElement) {
             $block->headBlockElements()->create($headBlockElement);
         }
@@ -100,32 +119,38 @@ class BlockElementFactory
         $block->reviewBlocks()->create($review);
     }
 
-    public function createTimelineBlock(Block $block, array $dropdown, array $dropdownElements, array $buttons):void
+    public function saveTimelineBlock(Block $block, array $dropdown, array $dropdownElements, array $buttons):void
     {
+        $block->dropdownBlocks()->delete();
         $block->dropdownBlocks()->create($dropdown);
 
+        $block->dropdownBlockElements()->delete();
         foreach ($dropdownElements as $element) {
             $block->dropdownBlockElements()->create($element);
         }
 
+        $block->buttons()->delete();
         foreach ($buttons as $button) {
             $block->buttons()->create($button);
         }
     }
 
-    public function createTrustedOrganizationsBlock(Block $block, string $paragraph, array $imageLinkElements):void
+    public function saveTrustedOrganizationsBlock(Block $block, string $paragraph, array $imageLinkElements):void
     {
+        $block->paragraphBlocks()->delete();
         $block->paragraphBlocks()->create([
            'paragraph' => $paragraph,
         ]);
 
+        $block->imageLinkElements()->delete();
         foreach ($imageLinkElements as $element) {
             $block->imageLinkElements()->create($element);
         }
     }
 
-    public function createWelcomingBlock(Block $block, array $heading):void
+    public function saveWelcomingBlock(Block $block, array $heading):void
     {
+        $block->headingBlocks()->delete();
         $block->headingBlocks()->create($heading);
     }
 }
