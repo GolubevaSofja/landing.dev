@@ -279,6 +279,7 @@ class BlockController extends Controller
             'block' => $blockData->toArray(),
             'blockType' => $blockType,
             'blockTypes' => $this->blockTypeRepository->all(),
+            'companies' => $this->companyRepository->all(),
         ]);
     }
 
@@ -363,6 +364,18 @@ class BlockController extends Controller
                 break;
             case self::REVIEWS_BLOCK:
                 $review = $request->input('review');
+                $companyId = $request->input('company_id');
+                $companyData = $request->input('company');
+
+                if (!$companyId && $companyData) {
+                    $company = $this->companyRepository->create(
+                        $companyData['name'],
+                        $companyData['logo']
+                    );
+                    $companyId = $company->id;
+                }
+                $review['company_id'] = $companyId;
+
                 $this->blockElementFactory->saveReviewsBlock($block, $review);
                 break;
             case self::TIMELINE_BLOCK:

@@ -30,6 +30,11 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    companies: {
+        type: Array,
+        required: true,
+        default: () => [],
+    },
 });
 
 const blockComponents = {
@@ -63,7 +68,7 @@ const blockComponents = {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
-                        <component :is="blockComponents[props.blockType]" :blockType="blockType" :block="props.block" />
+                        <component :is="blockComponents[props.blockType]" :blockType="blockType" :block="props.block" v-bind="{ companies }"/>
                     </div>
                 </div>
             </div>
