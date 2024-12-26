@@ -25,6 +25,9 @@ use Illuminate\Http\Request;
 use App\Models\Block;
 use Inertia\Inertia;
 
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Route;
+
 class BlockController extends Controller
 {
     private const BLOCK_WITH_COLUMNS_AND_PICTURES = 'Block with column elements and pictures';
@@ -269,9 +272,21 @@ class BlockController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+        $blocks = $this->blockRepository->all();
+        $landingView = $this->blockRepository->all()->map((fn (Block $block) => $this->getBlockData($block)))->toArray();
+
+        return Inertia::render('Welcome', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+            'landingView' => $landingView,
+            'blocks' => $blocks,
+            'blockTypes' => $this->blockTypeRepository->all(),
+            'companies' => $this->companyRepository->all(),
+        ]);
     }
 
     /**
