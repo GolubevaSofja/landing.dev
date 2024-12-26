@@ -18,6 +18,7 @@ class BlockWithHeadingAndButtonsResource extends JsonResource
         return [
             'id' => $blockData->id,
             'blockIndex' => $blockData->index,
+            'blockTypeID' => $blockData->block_type_id,
             'headingParagraph' => $blockData->headingParagraphBlocks->first() ? [
                 'heading' => $blockData->headingParagraphBlocks->first()->heading,
                 'paragraph' => $blockData->headingParagraphBlocks->first()->paragraph,

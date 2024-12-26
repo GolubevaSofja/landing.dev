@@ -16,7 +16,9 @@ class FooterBlockResource extends JsonResource
         return [
             'id' => $blockData->id,
             'blockIndex' => $blockData->index,
+            'blockTypeID' => $blockData->block_type_id,
             'footer' => $blockData->footerBlocks->first() ? [
+                'picture' => $blockData->footerBlocks->first()->picture,
                 'heading' => $blockData->footerBlocks->first()->heading,
                 'paragraph' => $blockData->footerBlocks->first()->paragraph,
                 'form_text' => $blockData->footerBlocks->first()->form_text,

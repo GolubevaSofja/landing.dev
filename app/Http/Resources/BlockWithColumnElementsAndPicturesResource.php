@@ -18,6 +18,7 @@ class BlockWithColumnElementsAndPicturesResource extends JsonResource
         return [
             'id' => $blockData->id,
             'blockIndex' => $blockData->index,
+            'blockTypeID' => $blockData->block_type_id,
             'paragraph' => $blockData->paragraphBlock->paragraph,
             'columnElements' => $blockData->columnElements->map(function ($columnElement) {
                 return [

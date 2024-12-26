@@ -18,6 +18,7 @@ class TimelineBlockResource extends JsonResource
         return [
             'id' => $blockData->id,
             'blockIndex' => $blockData->index,
+            'blockTypeID' => $blockData->block_type_id,
             'dropdown' => $blockData->dropdownBlocks->first() ? [
                 'picture' => $blockData->dropdownBlocks->first()->picture,
                 'picture_size' => $blockData->dropdownBlocks->first()->picture_size,

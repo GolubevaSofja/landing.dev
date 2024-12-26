@@ -16,6 +16,7 @@ class CenteredTextAndPictureBlockResource extends JsonResource
         return [
             'id' => $blockData->id,
             'blockIndex' => $blockData->index,
+            'blockTypeID' => $blockData->block_type_id,
             'centeredText' => $blockData->centeredPictureBlocks->first() ? [
                 'subheading' => $blockData->centeredPictureBlocks->first()->subheading,
                 'heading' => $blockData->centeredPictureBlocks->first()->heading,

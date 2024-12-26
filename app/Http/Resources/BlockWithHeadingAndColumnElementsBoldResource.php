@@ -17,6 +17,7 @@ class BlockWithHeadingAndColumnElementsBoldResource extends JsonResource
         return [
             'id' => $blockData->id,
             'blockIndex' => $blockData->index,
+            'blockTypeID' => $blockData->block_type_id,
             'heading' => $blockData->headingBlocks->first() ? [
                 'subheading' => $blockData->headingBlocks->first()->subheading,
                 'heading' => $blockData->headingBlocks->first()->heading,

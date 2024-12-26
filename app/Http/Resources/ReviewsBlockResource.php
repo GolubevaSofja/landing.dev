@@ -16,6 +16,7 @@ class ReviewsBlockResource extends JsonResource
         return [
             'id' => $blockData->id,
             'blockIndex' => $blockData->index,
+            'blockTypeID' => $blockData->block_type_id,
             'review' => $blockData->reviewBlocks->first() ? [
                 'picture' => $blockData->reviewBlocks->first()->picture,
                 'comment' => $blockData->reviewBlocks->first()->comment,

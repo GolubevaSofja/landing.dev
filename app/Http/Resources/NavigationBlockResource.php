@@ -17,6 +17,7 @@ class NavigationBlockResource extends JsonResource
         return [
             'id' => $blockData->id,
             'blockIndex' => $blockData->index,
+            'blockTypeID' => $blockData->block_type_id,
             'headBlock' => $blockData->headBlocks->first() ? [
                 'logo' => $blockData->headBlocks->first()->logo,
                 'bg_color' => $blockData->headBlocks->first()->bg_color,

@@ -17,6 +17,7 @@ class TrustedOrganizationsBlockResource extends JsonResource
         return [
             'id' => $blockData->id,
             'blockIndex' => $blockData->index,
+            'blockTypeID' => $blockData->block_type_id,
             'paragraph' => $blockData->paragraphBlock->paragraph,
             'imageLinkElements' => $blockData->imageLinkElements->map(function ($element) {
                 return [
