@@ -76,6 +76,59 @@ class BlockController extends Controller
         return (new Block())->getTable();
     }
 
+    public function getBlockData(Block $block)
+    {
+        $blockType = $block->getTypeAttribute();
+
+        switch ($blockType) {
+            case self::BLOCK_WITH_COLUMNS_AND_PICTURES:
+                $blockData = new BlockWithColumnElementsAndPicturesResource($block);
+                break;
+            case self::BLOCK_WITH_DROPDOWNS_AND_PICTURES:
+                $blockData = new BlockWithDropdownElementsAndPictureResource($block);
+                break;
+            case self::BLOCK_WITH_HEADING_AND_BUTTONS:
+                $blockData = new BlockWithHeadingAndButtonsResource($block);
+                break;
+            case self::BLOCK_WITH_HEADING_AND_CAROUSELS:
+                $blockData = new BlockWithHeadingAndCarouselResource($block);
+                break;
+            case self::BLOCK_WITH_HEADING_AND_COLUMNS_BASIC:
+                $blockData = new BlockWithHeadingAndColumnElementsBasicResource($block);
+                break;
+            case self::BLOCK_WITH_HEADING_AND_COLUMNS_BOLD:
+                $blockData = new BlockWithHeadingAndColumnElementsBoldResource($block);
+                break;
+            case self::BLOCK_WITH_CENTERED_TEXT_AND_PICTURE:
+                $blockData = new CenteredTextAndPictureBlockResource($block);
+                break;
+            case self::FOOTER_BLOCK:
+                $blockData = new FooterBlockResource($block);
+                break;
+            case self::INITIAL_BLOCK:
+                $blockData = new InitialBlockResource($block);
+                break;
+            case self::NAVIGATION_BLOCK:
+                $blockData = new NavigationBlockResource($block);
+                break;
+            case self::REVIEWS_BLOCK:
+                $blockData = new ReviewsBlockResource($block);
+                break;
+            case self::TIMELINE_BLOCK:
+                $blockData = new TimelineBlockResource($block);
+                break;
+            case self::TRUSTED_ORGANIZATIONS_BLOCK:
+                $blockData = new TrustedOrganizationsBlockResource($block);
+                break;
+            case self::WELCOMING_BLOCK:
+                $blockData = new WelcomingBlockResource($block);
+                break;
+            default:
+        }
+
+        return $blockData;
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -228,52 +281,7 @@ class BlockController extends Controller
     {
         $block = $this->blockRepository->findById($id);
         $blockType = $block->getTypeAttribute();
-
-        switch ($blockType) {
-            case self::BLOCK_WITH_COLUMNS_AND_PICTURES:
-                $blockData = new BlockWithColumnElementsAndPicturesResource($block);
-                break;
-            case self::BLOCK_WITH_DROPDOWNS_AND_PICTURES:
-                $blockData = new BlockWithDropdownElementsAndPictureResource($block);
-                break;
-            case self::BLOCK_WITH_HEADING_AND_BUTTONS:
-                $blockData = new BlockWithHeadingAndButtonsResource($block);
-                break;
-            case self::BLOCK_WITH_HEADING_AND_CAROUSELS:
-                $blockData = new BlockWithHeadingAndCarouselResource($block);
-                break;
-            case self::BLOCK_WITH_HEADING_AND_COLUMNS_BASIC:
-                $blockData = new BlockWithHeadingAndColumnElementsBasicResource($block);
-                break;
-            case self::BLOCK_WITH_HEADING_AND_COLUMNS_BOLD:
-                $blockData = new BlockWithHeadingAndColumnElementsBoldResource($block);
-                break;
-            case self::BLOCK_WITH_CENTERED_TEXT_AND_PICTURE:
-                $blockData = new CenteredTextAndPictureBlockResource($block);
-                break;
-            case self::FOOTER_BLOCK:
-                $blockData = new FooterBlockResource($block);
-                break;
-            case self::INITIAL_BLOCK:
-                $blockData = new InitialBlockResource($block);
-                break;
-            case self::NAVIGATION_BLOCK:
-                $blockData = new NavigationBlockResource($block);
-                break;
-            case self::REVIEWS_BLOCK:
-                $blockData = new ReviewsBlockResource($block);
-                break;
-            case self::TIMELINE_BLOCK:
-                $blockData = new TimelineBlockResource($block);
-                break;
-            case self::TRUSTED_ORGANIZATIONS_BLOCK:
-                $blockData = new TrustedOrganizationsBlockResource($block);
-                break;
-            case self::WELCOMING_BLOCK:
-                $blockData = new WelcomingBlockResource($block);
-                break;
-            default:
-        }
+        $blockData = $this->getBlockData($block);
 
         return Inertia::render('BlockEdit', [
             'block' => $blockData->toArray(),
