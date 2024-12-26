@@ -2,7 +2,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, router } from '@inertiajs/vue3';
 import {defineProps} from "vue";
-import { Inertia } from '@inertiajs/inertia';
 
 defineProps({
     blocks: {
@@ -17,16 +16,6 @@ defineProps({
 
 const deleteBlock = (id) => {
     if (confirm("Are you sure you want to delete this block?")) {
-        // Inertia.visit(`/blocks/${id}`, {
-        //     method: 'delete',
-        //     preserveScroll: true,
-        //     preserveState: true,
-        // });
-
-        // router.visit(`/blocks/${id}`, {
-        //     method: 'delete'
-        // })
-
         router.delete(`/blocks/${id}`, {
                 preserveScroll: true,
                 preserveState: true,

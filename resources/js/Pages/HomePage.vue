@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import { defineProps, reactive, ref } from 'vue';
+import { defineProps, ref } from 'vue';
 import NavigationBlock from "@/Types/NavigationBlock.vue";
 import InitialBlock from "@/Types/InitialBlock.vue";
 import WelcomingBlock from "@/Types/WelcomingBlock.vue";
@@ -53,15 +53,6 @@ const blockComponents = {
 
 const selectedBlock = ref(null);
 
-// const addedBlocks = reactive([]);
-//
-// function addBlock() {
-//     if (selectedBlock) {
-//         addedBlocks.push(selectedBlock.value);
-//     }
-// }
-
-
 </script>
 
 <template>
@@ -96,7 +87,6 @@ const selectedBlock = ref(null);
                        <div v-if="selectedBlock">
                            <component :is="blockComponents[selectedBlock]" v-bind="{ companies }" />
                        </div>
-
 
                 </div>
 
